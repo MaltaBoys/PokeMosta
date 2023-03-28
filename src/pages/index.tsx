@@ -14,7 +14,7 @@ export default function Home() {
 						alt="Flowbite Logo"
 					/>
 					<span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-						Flowbite
+						Flowbiteeee
 					</span>
 				</Navbar.Brand>
 				<Navbar.Toggle />
