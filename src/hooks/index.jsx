@@ -1,6 +1,5 @@
 // Components
-export { default as Navbar } from "../components/Menus/Navbar";
-export { default as Sidebar } from "../components/Menus/Sidebar";
+export { default as Menus } from "../components/Menus/Sidebar";
 export { default as PokemonCard } from "../components/Cards/PokemonCard/Card";
 export { default as PokemonList } from "../components/Cards/PokemonCard/ListCards";
 export { default as Pokemon } from "../components/Cards/PokemonCard/CardDetail";

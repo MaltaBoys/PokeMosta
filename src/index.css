@@ -9,23 +9,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 100%;
-  min-height: 100vh;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 main {
   width: 100%;
-}
-
-.content {
-  display: flex;
-}
-
-.sidebar > div {
-  border-radius: 0;
+  margin: 4.3rem 0 0;
+  padding-left: 11rem;
 }
