@@ -1,0 +1,19 @@
+@import "./components/cards";
+@import "../../../node_modules/tailwindcss/base.css";
+@import "../../../node_modules/tailwindcss/components.css";
+@import "../../../node_modules/tailwindcss/utilities.css";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  width: 100%;
+  margin: 4.2rem 0 0;
+  padding-left: 11rem;
+}
