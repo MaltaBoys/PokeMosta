@@ -10,7 +10,9 @@
     "@testing-library/user-event": "^13.5.0",
     "flowbite": "^1.6.4",
     "flowbite-react": "^0.4.2",
+    "os-browserify": "^0.3.0",
     "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
@@ -41,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.32.1",
     "nodemon": "^2.0.22",
     "tailwindcss": "^3.3.0"
   }
