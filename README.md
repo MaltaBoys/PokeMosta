@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# PokeMosta
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenido a PokeMosta, una aplicación web creada con React donde puedes acceder a la Pokedex de todos los juegos de Pokémon, el TCG, eventos de Pokémon, series animadas y crear tus equipos Pokémon para guardarlos en tu usuario.
 
-## Available Scripts
+[PokeMosta](https://pokemosta.vercel.app/)
 
-In the project directory, you can run:
+## Funcionalidades
 
-### `npm start`
+-**Pokedex** : Accede a información detallada de todos los Pokémon de los diferentes juegos, incluyendo sus habilidades, estadísticas, movimientos y evoluciones.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-**TCG**: Accede a una lista de todas las cartas del juego de cartas coleccionables de Pokémon, con imágenes y descripciones detalladas de cada una.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-**Eventos**: Mantente al día con los eventos actuales y futuros de Pokémon, incluyendo eventos de juego, eventos en línea y eventos en vivo.
 
-### `npm test`
+-**Series** animadas: Accede a una lista completa de todas las temporadas de la serie animada de Pokémon, con información sobre los personajes, episodios y tramas.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-**Equipos Pokémon**: Accede a una lista completa de todas las temporadas de la serie animada de Pokémon, con información sobre los personajes, episodios y tramas.
 
-### `npm run build`
+## Instalación
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para instalar PokeMosta en tu máquina local, sigue estos pasos:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clona este repositorio en tu máquina local: git clone https://github.com/tu-usuario/pokemosta.git
+2. Abre la carpeta del repositorio en tu terminal: cd pokemosta
+3. Instala las dependencias necesarias: npm install
+4. Inicia la aplicación: npm start
+5. Abre la aplicación en tu navegador web en http://localhost:3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Contribución
 
-### `npm run eject`
+Si quieres contribuir a PokeMosta, puedes hacer lo siguiente:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+6. Haz un fork de este repositorio.
+7. Clona el fork en tu máquina local: git clone https://github.com/tu-usuario/pokemosta.git
+8. Crea una nueva rama para tu contribución: git checkout -b mi-nueva-funcionalidad
+9. Realiza tus cambios y haz commit de los mismos: git commit -m "Agrego mi nueva funcionalidad"
+10. Envía tus cambios al repositorio remoto: git push origin mi-nueva-funcionalidad
+11. Crea un Pull Request en este repositorio para que revisemos tus cambios.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Licencia
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+PokeMosta está disponible bajo la licencia MIT. Consulta el archivo LICENSE para más información.
