@@ -5,7 +5,7 @@ import { MdCatchingPokemon } from "react-icons/md";
 import { HiHome } from "react-icons/hi";
 import { TbCards } from "react-icons/tb";
 import { GiPokecog } from "react-icons/gi";
-import Toggle from "../Themes/theme";
+import Toggle from "../../assets/Themes/theme";
 export default function Example() {
 	return (
 		<>
