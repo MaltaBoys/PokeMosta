@@ -1,42 +1,45 @@
 # PokeMosta
 
-Bienvenido a PokeMosta, una aplicación web creada con React donde puedes acceder a la Pokedex de todos los juegos de Pokémon, el TCG, eventos de Pokémon, series animadas y crear tus equipos Pokémon para guardarlos en tu usuario.
+Welcome to PokeMosta, a web application created with React where you can access the Pokedex of all Pokémon games, the TCG, Pokémon events, animated series and create your Pokémon teams to save them in your user.
 
-[PokeMosta](https://pokemosta.vercel.app/)
+[Show website](https://pokemosta.vercel.app/)
 
-## Funcionalidades
+## Features
 
--**Pokedex** : Accede a información detallada de todos los Pokémon de los diferentes juegos, incluyendo sus habilidades, estadísticas, movimientos y evoluciones.
+-**Pokedex** : Access detailed information on all the Pokémon from the different games, including their abilities, statistics, movements and evolutions.
 
--**TCG**: Accede a una lista de todas las cartas del juego de cartas coleccionables de Pokémon, con imágenes y descripciones detalladas de cada una.
+-**TCG**: Access a list of all the cards in the Pokémon Trading Card Game, with images and detailed descriptions of each one.
 
--**Eventos**: Mantente al día con los eventos actuales y futuros de Pokémon, incluyendo eventos de juego, eventos en línea y eventos en vivo.
+-**Events**: Stay up to date with current and upcoming Pokémon events, including in-game events, online events, and live events.
 
--**Series** animadas: Accede a una lista completa de todas las temporadas de la serie animada de Pokémon, con información sobre los personajes, episodios y tramas.
+-**Animated Series**: Access a complete list of all seasons of the Pokémon animated series, with information about the characters, episodes, and plots.
 
--**Equipos Pokémon**: Accede a una lista completa de todas las temporadas de la serie animada de Pokémon, con información sobre los personajes, episodios y tramas.
+-**Pokémon Teams**: Access a complete list of all seasons of the Pokémon animated series, with information about the characters, episodes, and plots.
 
-## Instalación
 
-Para instalar PokeMosta en tu máquina local, sigue estos pasos:
+## Facility
 
-1. Clona este repositorio en tu máquina local: git clone https://github.com/tu-usuario/pokemosta.git
-2. Abre la carpeta del repositorio en tu terminal: cd pokemosta
-3. Instala las dependencias necesarias: npm install
-4. Inicia la aplicación: npm start
-5. Abre la aplicación en tu navegador web en http://localhost:3000
+To install PokeMosta on your local machine, follow these steps:
 
-## Contribución
+1. Clone this repository to your local machine: `git clone https://github.com/your-username/pokemosta.git`
+2. Open the repository folder in your terminal: `cd pokemosta`
+3. Install the necessary dependencies: `npm install`
+4. Start the application: `npm start`
+5. Open the app in your web browser at: `http://localhost:3000`
 
-Si quieres contribuir a PokeMosta, puedes hacer lo siguiente:
 
-6. Haz un fork de este repositorio.
-7. Clona el fork en tu máquina local: git clone https://github.com/tu-usuario/pokemosta.git
-8. Crea una nueva rama para tu contribución: git checkout -b mi-nueva-funcionalidad
-9. Realiza tus cambios y haz commit de los mismos: git commit -m "Agrego mi nueva funcionalidad"
-10. Envía tus cambios al repositorio remoto: git push origin mi-nueva-funcionalidad
-11. Crea un Pull Request en este repositorio para que revisemos tus cambios.
+## Contribution
 
-## Licencia
+If you want to contribute to PokeMosta, you can do the following:
 
-PokeMosta está disponible bajo la licencia MIT. Consulta el archivo LICENSE para más información.
+1. Fork this repository.
+2. Clone the fork to your local machine: `git clone https://github.com/your-username/pokemosta.git`
+3. Create a new branch for your contribution: `git checkout -b my-new-feature`
+4. Make your changes and commit them: `git commit -m "I add my new functionality"`
+5. Push your changes to the remote repository: `git push origin my-new-feature`
+11. Create a Pull Request to this repository for us to review your changes.
+
+
+## License
+
+PokeMosta is available under the MIT license. See the LICENSE file for more information.
