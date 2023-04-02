@@ -33,8 +33,8 @@ const ListCards = () => {
   return (
     <>
       <div className="p-4 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 dark:bg-slate-700">
-        {pokemonList.map((pokemon) => (
-          <PokemonCard pokemonId={pokemon.name} />
+        {pokemonList.map((pokemon, key) => (
+          <PokemonCard id={key} pokemonId={pokemon.name} />
         ))}
       </div>
     </>

@@ -17,20 +17,16 @@ function CardDetail() {
         setPokemonCard(data);
       });
   }, [pokemonID]);
-
-  // Si no tenemos los datos, mostramos un mensaje de carga
-  if (!pokemonCard) {
-    return <p>No pokemon detail</p>;
-  }
-
-  return (
-    <>
-      <img
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
-        alt={pokemonCard.name}
-      />
-    </>
-  );
+  
+		return (
+		<>
+			<img
+				src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
+				alt={pokemonCard.name}
+			/>
+		</>
+	);
+  
 }
 
 export default CardDetail;
