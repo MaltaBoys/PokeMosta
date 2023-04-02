@@ -1,6 +1,7 @@
 import { Flowbite } from "flowbite-react";
-import { Menus, Home, Tcg, Pokedex, Pokemon } from "./hooks";
+import { Menus, Home, Tcg, Pokedex } from "./hooks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CardDetail from "./components/Cards/PokemonCard/CardDetail";
 
 function App() {
 	return (
@@ -14,7 +15,7 @@ function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/pokedex" element={<Pokedex />} />
 						<Route path="/tcg" element={<Tcg />} />
-						<Route path="/pokemon/:id" element={<Pokemon />} />
+						<Route path="/pokemon/:id" element={<CardDetail />} />
 					</Routes>
 				</Router>
 			</main>

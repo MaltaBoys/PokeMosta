@@ -101,7 +101,7 @@ function Card({ pokemonId }) {
           />
         </div>
         <h2 className="my-4 font-semibold text-lg capitalize dark:text-gray-100">
-          <Link to={`/pokemon?id=${pokemonCard.id}`}>{pokemonCard.name}</Link>
+          <Link to={`/pokemon/${pokemonCard.id}`}>{pokemonCard.name}</Link>
         </h2>
         <div className="flex">
           <div
