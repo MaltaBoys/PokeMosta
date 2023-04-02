@@ -1,5 +1,6 @@
 import React from "react";
 
+//This method looks the prefered theme in the media to display the dark or light mode
 const getInitialTheme = () => {
 	if (typeof window !== "undefined" && window.localStorage) {
 		const storedPrefs = window.localStorage.getItem("current-theme");
