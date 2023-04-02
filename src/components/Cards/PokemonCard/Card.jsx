@@ -5,7 +5,7 @@ import { AiFillStar } from "react-icons/ai";
 function Card({ pokemonId }) {
   const [pokemonCard, setPokemonCard] = useState(null);
 
-  // Nos conectamos a la api para recoger los datos en JSON
+  // We connect to the api to collect the data in JSON
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then((response) => response.json())
@@ -14,7 +14,7 @@ function Card({ pokemonId }) {
       });
   }, [pokemonId]);
 
-  // Si no tenemos los datos, mostramos un mensaje de carga
+  // If we don't have the data, we show a loading message
   if (!pokemonCard) {
     return (
       <div className="relative p-4 bg-white border border-gray-200 rounded-xl shadow-xl dark:bg-gray-800 dark:border-gray-700">
@@ -44,12 +44,12 @@ function Card({ pokemonId }) {
     );
   }
 
-  // Guardamos los tipos de pokemon que hay (dos máximo)
+  // We keep the types of pokemon that there are (two maximum)
   const types = pokemonCard.types.map((type) => type.type.name);
   const priType = types[0];
   const secType = types[1] || null;
 
-  // Array de los estilos para cada tipo de Pokemon.
+  // Array of styles for each type of Pokemon
   const typesStyleSheet = {
     bug: "t-bug dark:t-bug",
     dark: "t-dark dark:t-dark",
@@ -71,11 +71,11 @@ function Card({ pokemonId }) {
     water: "t-water dark:t-water",
   };
 
-  // Obtenemos el estilo correspondiente del primer y segundo tipo de Pokemon o una cadena vacia si no ha sido encontrado.
+  // We get the corresponding style of the first and second types of Pokemon or an empty string if it hasn't been found
   const resPriType = typesStyleSheet[priType] || "";
   const resSecType = typesStyleSheet[secType] || "";
 
-  // Devolvemos la Card del pokemon con los detalles
+  // We return the Card of the pokemon with the details
   return (
     <>
       <div
@@ -101,16 +101,16 @@ function Card({ pokemonId }) {
           />
         </div>
         <h2 className="my-4 font-semibold text-lg capitalize dark:text-gray-100">
-          <Link to={`/pokemon?id=${pokemonCard.id}`}>{pokemonCard.name}</Link>
+          <Link to={`/pokemon/${pokemonCard.id}`}>{pokemonCard.name}</Link>
         </h2>
         <div className="flex">
           <div
-            className={`me-2 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ${resPriType}`}
+            className={`me-2 text-sm font-medium mr-2 px-2.5 pt-0.5 pb-1 rounded-full ${resPriType}`}
           >
             {priType}
           </div>
           <div
-            className={`me-2 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ${resSecType}`}
+            className={`me-2 text-sm font-medium mr-2 px-2.5 pt-0.5 pb-1 rounded-full ${resSecType}`}
           >
             {secType}
           </div>
