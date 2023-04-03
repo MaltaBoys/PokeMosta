@@ -84,7 +84,7 @@ function CardDetail() {
 		return <>{statElements.reverse()}</>;
 	}
 
-	/* function peo() {
+	/* function EntireStat() {
 		let a = "";
 		for (let i = 0; i < 6; i++) {
 			let statName = pokemonCard.stats[i].stat.name.toUpperCase();
@@ -97,7 +97,7 @@ function CardDetail() {
 		}
 		return a;
 	} */
-	function Peo(pokemonCard) {
+	function EntireStat(pokemonCard) {
 		const statElements = [];
 
 		for (let i = 0; i < 6; i++) {
@@ -274,7 +274,7 @@ function CardDetail() {
 				<div className="overflow-hidden relative col-span-2">
 					<h2 className="text-2xl font-semibold dark:text-white mb-4">Stats</h2>
 					<div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl grid grid-cols-6 gap-4 py-6 px-4">
-						{Peo(pokemonCard)}
+						{EntireStat(pokemonCard)}
 					</div>
 				</div>
 				<div className="overflow-hidden relative col-span-3">
