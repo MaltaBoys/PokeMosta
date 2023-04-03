@@ -17,8 +17,6 @@ function TCGCard({ tcgCardID }) {
 			});
 	}, [tcgCardID]);
 
-	console.log(tcgCard);
-
 	// Si no tenemos los datos, mostramos un mensaje de carga
 	if (!tcgCard) {
 		return (
