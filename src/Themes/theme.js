@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeContext } from "./themeContext";
 
+//This constant is in charge of print a functional button to change the theme
 const Toggle = () => {
 	const { theme, setTheme } = React.useContext(ThemeContext);
 	return (

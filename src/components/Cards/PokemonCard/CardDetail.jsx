@@ -48,6 +48,10 @@ function CardDetail() {
   } else {
     category = "Any category";
   }
+  let growthRate = "";
+  if (pokemonSpecies) {
+    growthRate = pokemonSpecies.growth_rate.name;
+  }
 
   // We keep the types of pokemon that there are (two maximum)
   const abilities = pokemonCard.abilities
@@ -59,7 +63,7 @@ function CardDetail() {
 
   return (
     <>
-      <div className="w-full dark:bg-gray-900 mx-auto lg:grid lg:grid-cols-5 p-4 gap-4">
+      <div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4 mb-4">
         <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 overflow-hidden relative col-span-2 bg-gray-50 dark:bg-gray-800 rounded-xl pb-4 flex justify-center items-center">
           <div className="absolute top-4 right-4 left-4 z-20">
             <Link
@@ -100,7 +104,12 @@ function CardDetail() {
               {pokemonCard.name}
             </h1>
             <p className="dark:text-gray-700 font-black text-6xl">
-              #{pokemonCard.id}
+              #
+              {pokemonCard.id < 10
+                ? "00" + pokemonCard.id
+                : pokemonCard.id < 100
+                ? "0" + pokemonCard.id
+                : pokemonCard.id}
             </p>
           </div>
           <div className="flex flex-col dark:text-white">
@@ -170,9 +179,73 @@ function CardDetail() {
                 Type
               </p>
               <p className="text-md font-semibold dark:text-white capitalize">
-                {hiddenAbility ? hiddenAbility.ability.name : "None"}
+                {"WIP"}
               </p>
             </div>
+            <div className="flex flex-col">
+              <p className="text-md font-regular dark:text-gray-500 mb-2">
+                Hatch Time
+              </p>
+              <p className="text-md font-semibold dark:text-white capitalize">
+                {pokemonSpecies
+                  ? pokemonSpecies.hatch_counter * 255 + " Steps"
+                  : "None"}
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-md font-regular dark:text-gray-500 mb-2">
+                Growth Rate
+              </p>
+              <p className="text-md font-semibold dark:text-white capitalize">
+                {growthRate}
+              </p>
+              {/* - Erratic: 600,000 exp at level 100
+                  - Fast: 800,000 exp at level 100
+                  - medium fast: 1,000,000 exp at level 100
+                  - medium slow: 1,059,860 exp at level 100
+                  - slow: 1,250,000 exp at level 100
+                  - Fluctuating: 1,640,000 exp at level 100 */}
+            </div>
+            <div className="flex flex-col">
+              <p className="text-md font-regular dark:text-gray-500 mb-2">
+                Weaknesses
+              </p>
+              <p className="text-md font-semibold dark:text-white capitalize">
+                {"WIP"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4">
+        <div className="overflow-hidden relative col-span-2">
+          <h2 className="text-2xl font-semibold dark:text-white mb-4">Stats</h2>
+          <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl grid grid-cols-6 gap-4 py-6 px-4">
+            <div className="flex flex-col">
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-gray-600"></div>
+              <div className="w-full h-1.5 mb-4 rounded-full dark:bg-red-600"></div>
+              <div className="w-full h-1.5 mb-2 rounded-full dark:bg-red-600"></div>
+              <h3 className="dark:text-white text-center">HP</h3>
+            </div>
+          </div>
+        </div>
+        <div className="overflow-hidden relative col-span-3">
+          <h2 className="text-2xl font-semibold dark:text-white mb-4">
+            Evolution Line
+          </h2>
+          <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl flex justify-center items-center">
+            B
           </div>
         </div>
       </div>
