@@ -11,3 +11,5 @@ export { default as ScrollTop } from "../components/Functions/ScrollTop";
 export { default as Home } from "../pages/Home";
 export { default as Pokedex } from "../pages/Pokedex";
 export { default as Tcg } from "../pages/Tcg";
+export { default as Register } from "../components/Users/SignUp";
+export { default as Login } from "../components/Users/SignIn";
