@@ -60,3 +60,67 @@
   font-weight: 900;
   font-style: black;
 }
+
+/* Poppins */
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Thin.ttf") format("ttf");
+  font-weight: 100;
+  font-style: thin;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Inter-ExtraLight.otf") format("ttf");
+  font-weight: 200;
+  font-style: extralight;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Light.ttf") format("ttf");
+  font-weight: 300;
+  font-style: light;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Regular.ttf") format("ttf");
+  font-weight: 400;
+  font-style: regular;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Medium.ttf") format("ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-SemiBold.ttf") format("ttf");
+  font-weight: 600;
+  font-style: semibold;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-ExtraBold.ttf") format("ttf");
+  font-weight: 800;
+  font-style: extrabold;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./Poppins-Black.ttf") format("ttf");
+  font-weight: 900;
+  font-style: black;
+}
