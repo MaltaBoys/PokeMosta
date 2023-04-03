@@ -83,12 +83,15 @@ function Card({ pokemonId }) {
         key={pokemonCard.name}
       >
         <div className="absolute inset-x-4 flex justify-between z-20">
-          <div className="ms-2 text-2xl font-extrabold text-gray-700">
+          <div className="ms-2 text-2xl font-extrabold text-gray-500 dark:text-gray-700 select-none">
             #{pokemonCard.id}
           </div>
-          <AiFillStar className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-900" />
+          <AiFillStar className="w-6 h-6 text-gray-500 cursor-pointer hover:text-gray-900 dark:text-gray-700" />
         </div>
-        <div className="relative mb-2">
+        <Link
+          to={`/pokemon/${pokemonCard.id}`}
+          className="relative mb-2 select-none"
+        >
           <img
             className="absolute inset-x-0 blur-2xl z-0"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
@@ -99,8 +102,8 @@ function Card({ pokemonId }) {
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
             alt={pokemonCard.name}
           />
-        </div>
-        <h2 className="my-4 font-semibold text-lg capitalize dark:text-gray-100">
+        </Link>
+        <h2 className="mb-4 mt-8 font-semibold text-xl capitalize dark:text-gray-100">
           <Link to={`/pokemon/${pokemonCard.id}`}>{pokemonCard.name}</Link>
         </h2>
         <div className="flex">

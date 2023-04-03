@@ -1,6 +1,7 @@
 @import "../../../node_modules/tailwindcss/base.css";
 @import "../../../node_modules/tailwindcss/components.css";
 @import "../../../node_modules/tailwindcss/utilities.css";
+@import "../../fonts/index.css";
 .t-bug {
   color: #3c9950;
   background-color: #1b4b27;
@@ -92,10 +93,7 @@
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Inter", sans-serif;
 }
 
 main {
