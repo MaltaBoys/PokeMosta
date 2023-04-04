@@ -10,6 +10,7 @@ function CardDetail() {
   const [pokemonCard, setPokemonCard] = useState(null);
   const [pokemonSpecies, setPokemonSpecies] = useState(null);
   const [weaknesses, setWeaknesses] = useState([]);
+  const [evolutionChain, setEvolutionChain] = useState([]);
 
   // States to store the search data by the ID parameter
   let params = useParams();
@@ -34,6 +35,16 @@ function CardDetail() {
     }
   }, [pokemonCard]);
 
+  useEffect(() => {
+    if (pokemonSpecies) {
+      fetch(pokemonSpecies.evolution_chain.url)
+        .then((response) => response.json())
+        .then((data) => {
+          setEvolutionChain(data.chain);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [pokemonSpecies]);
   useEffect(() => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
@@ -88,7 +99,6 @@ function CardDetail() {
   const abilities = pokemonCard.abilities
     .map((ability) => ability.ability.name)
     .join(", ");
-
   const hiddenAbility = pokemonCard.abilities.find(
     (ability) => ability.is_hidden
   );
@@ -102,14 +112,14 @@ function CardDetail() {
         statElements.push(
           <div
             key={i}
-            className="w-full h-1 mb-4 rounded-full dark:bg-red-600"
+            className="w-full h-1 mb-4 rounded-full dark:bg-red-600 bg-yellow-200 "
           ></div>
         );
       } else {
         statElements.push(
           <div
             key={i}
-            className="w-full h-1 mb-4 rounded-full dark:bg-gray-600"
+            className="w-full h-1 mb-4 rounded-full dark:bg-gray-600 bg-gray-400"
           ></div>
         );
       }
@@ -364,7 +374,68 @@ function CardDetail() {
             Evolution Line
           </h2>
           <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl flex justify-center items-center">
-            B
+            <div>
+              {evolutionChain.species ? (
+                <div>
+                  Primera Evo
+                  <p>Name: {evolutionChain.species.name}</p>
+                </div>
+              ) : (
+                <p>Something bad happened</p>
+              )}
+              {evolutionChain.evolves_to ? (
+                evolutionChain.evolves_to.map((evolution) => (
+                  <div key={evolution.species.name}>
+                    Segunda Evo
+                    <p>Name: {evolution.species.name}</p>
+                    <p>
+                      {evolution.evolution_details.map((evolution_details) => {
+                        {
+                          return evolution_details.min_level
+                            ? evolution_details.min_level
+                            : evolution_details.item
+                            ? evolution_details.item.name
+                            : evolution_details.held_item
+                            ? evolution_details.held_item.name
+                            : evolution_details.min_happiness
+                            ? evolution_details.min_happiness
+                            : " TRADE EVOLUTION ";
+                        }
+                      })}
+                    </p>
+                    {evolution.evolves_to ? (
+                      evolution.evolves_to.map((evolution) => (
+                        <div key={evolution.species.name}>
+                          Tercera Evo
+                          <p>Name: {evolution.species.name}</p>
+                          <p>
+                            {evolution.evolution_details.map(
+                              (evolution_details) => {
+                                {
+                                  return evolution_details.min_level
+                                    ? evolution_details.min_level
+                                    : evolution_details.item
+                                    ? evolution_details.item.name
+                                    : evolution_details.held_item
+                                    ? evolution_details.held_item.name
+                                    : evolution_details.min_happiness
+                                    ? evolution_details.min_happiness
+                                    : " TRADE EVOLUTION ";
+                                }
+                              }
+                            )}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No evolutionChain found</p>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>No evolutionChain found</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
