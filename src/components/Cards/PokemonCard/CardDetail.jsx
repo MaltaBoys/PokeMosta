@@ -187,6 +187,10 @@ function CardDetail() {
   const resPriWeak = typesStyleSheet[priWeak] || "";
   const resSecWeak = typesStyleSheet[secWeak] || "";
 
+  const url = evolutionChain.species.url;
+  const parts = url.split("/");
+  const pokeNumber = parseInt(parts[parts.length - 2]);
+
   return (
     <>
       <div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4 mb-4">
@@ -374,35 +378,55 @@ function CardDetail() {
             Evolution Line
           </h2>
           <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl flex justify-center items-center">
-            <div>
-              {evolutionChain.species ? (
-                <div>
-                  Primera Evo
-                  <p>Name: {evolutionChain.species.name}</p>
-                </div>
-              ) : (
-                <p>Something bad happened</p>
-              )}
+            <div className="grid grid-cols-3 gap-6">
+              <div className="">
+                {evolutionChain.species ? (
+                  <>
+                    <div className="w-32 h-32 mb-4 pb-4 px-4 bg-gray-800 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                      <img
+                        className="w-full"
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokeNumber}.png`}
+                        alt={pokemonCard.name}
+                      />
+                    </div>
+                    <p className="text-center text-white">
+                      {evolutionChain.species.name}
+                    </p>
+                  </>
+                ) : (
+                  <p>Something bad happened</p>
+                )}
+              </div>
+
               {evolutionChain.evolves_to ? (
                 evolutionChain.evolves_to.map((evolution) => (
-                  <div key={evolution.species.name}>
-                    Segunda Evo
-                    <p>Name: {evolution.species.name}</p>
-                    <p>
-                      {evolution.evolution_details.map((evolution_details) => {
-                        {
-                          return evolution_details.min_level
-                            ? evolution_details.min_level
-                            : evolution_details.item
-                            ? evolution_details.item.name
-                            : evolution_details.held_item
-                            ? evolution_details.held_item.name
-                            : evolution_details.min_happiness
-                            ? evolution_details.min_happiness
-                            : " TRADE EVOLUTION ";
-                        }
-                      })}
-                    </p>
+                  <>
+                    <div key={evolution.species.name}>
+                      Segunda Evo
+                      <p>Name: {evolution.species.name}</p>
+                      <p>
+                        {evolution.evolution_details.map(
+                          (evolution_details) => {
+                            let evolutionMethod = "";
+
+                            if (evolution_details.min_level) {
+                              evolutionMethod = evolution_details.min_level;
+                            } else if (evolution_details.item) {
+                              evolutionMethod = evolution_details.item;
+                            } else if (evolution_details.held_item) {
+                              evolutionMethod =
+                                evolution_details.held_item.name;
+                            } else if (evolution_details.min_happiness) {
+                              evolutionMethod = evolution_details.min_happiness;
+                            } else {
+                              evolutionMethod = "TRADE EVOLUTION";
+                            }
+
+                            return evolutionMethod;
+                          }
+                        )}
+                      </p>
+                    </div>
                     {evolution.evolves_to ? (
                       evolution.evolves_to.map((evolution) => (
                         <div key={evolution.species.name}>
@@ -411,17 +435,23 @@ function CardDetail() {
                           <p>
                             {evolution.evolution_details.map(
                               (evolution_details) => {
-                                {
-                                  return evolution_details.min_level
-                                    ? evolution_details.min_level
-                                    : evolution_details.item
-                                    ? evolution_details.item.name
-                                    : evolution_details.held_item
-                                    ? evolution_details.held_item.name
-                                    : evolution_details.min_happiness
-                                    ? evolution_details.min_happiness
-                                    : " TRADE EVOLUTION ";
+                                let evolutionMethod = "";
+
+                                if (evolution_details.min_level) {
+                                  evolutionMethod = evolution_details.min_level;
+                                } else if (evolution_details.item) {
+                                  evolutionMethod = evolution_details.item;
+                                } else if (evolution_details.held_item) {
+                                  evolutionMethod =
+                                    evolution_details.held_item.name;
+                                } else if (evolution_details.min_happiness) {
+                                  evolutionMethod =
+                                    evolution_details.min_happiness;
+                                } else {
+                                  evolutionMethod = "TRADE EVOLUTION";
                                 }
+
+                                return evolutionMethod;
                               }
                             )}
                           </p>
@@ -430,7 +460,7 @@ function CardDetail() {
                     ) : (
                       <p>No evolutionChain found</p>
                     )}
-                  </div>
+                  </>
                 ))
               ) : (
                 <p>No evolutionChain found</p>
