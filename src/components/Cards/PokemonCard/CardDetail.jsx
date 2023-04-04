@@ -397,7 +397,9 @@ function CardDetail() {
 														? evolution_details.item.name
 														: evolution_details.held_item
 														? evolution_details.held_item.name
-														: evolution_details.min_happiness;
+														: evolution_details.min_happiness
+														? evolution_details.min_happiness
+														: " TRADE EVOLUTION ";
 												}
 											})}
 										</p>
@@ -414,7 +416,11 @@ function CardDetail() {
 																		? evolution_details.min_level
 																		: evolution_details.item
 																		? evolution_details.item.name
-																		: evolution_details.held_item.name;
+																		: evolution_details.held_item
+																		? evolution_details.held_item.name
+																		: evolution_details.min_happiness
+																		? evolution_details.min_happiness
+																		: " TRADE EVOLUTION ";
 																}
 															}
 														)}
