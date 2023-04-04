@@ -1,14 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button } from "flowbite-react";
 import LogoPM from "../../assets/logotype.png";
 import { MdCatchingPokemon } from "react-icons/md";
 import { HiHome } from "react-icons/hi";
 import { TbCards } from "react-icons/tb";
-import { GiPokecog } from "react-icons/gi";
 import Toggle from "../../Themes/theme";
 
 export default function Example() {
+  const location = useLocation();
+
   return (
     <>
       {/* Navbar Menu */}
@@ -27,7 +28,7 @@ export default function Example() {
               </a>
             </div>
             <div className="flex items-center">
-              <div className="flex items-center ml-3">
+              <div className="flex items-center">
                 {/* User Section */}
                 <div className="flex gap-2">
                   <div className="flex justify-end items-center mr-4 gap-2">
@@ -54,8 +55,20 @@ export default function Example() {
                     </button>
                     <Toggle />
                   </div>
-                  <Button>Sign In</Button>
-                  <Button color="light">Sign Up</Button>
+                  <a
+                    href="/login"
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >
+                    Sign In
+                  </a>
+                  <a
+                    href="/register"
+                    type="button"
+                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  >
+                    Sign Up
+                  </a>
                 </div>
               </div>
             </div>
@@ -74,7 +87,11 @@ export default function Example() {
             <li>
               <a
                 href="/"
-                className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black first-letter:dark:hover:text-white"
+                className={
+                  location.pathname === "/"
+                    ? "flex flex-col items-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                    : "flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white"
+                }
               >
                 <HiHome className="text-3xl" />
                 <span className="text-md">Home</span>
@@ -83,7 +100,11 @@ export default function Example() {
             <li>
               <a
                 href="/pokedex"
-                className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white"
+                className={
+                  location.pathname === "/pokedex"
+                    ? "flex flex-col items-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                    : "flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white"
+                }
               >
                 <MdCatchingPokemon className="text-3xl" />
                 <span className="text-md">Pokedex</span>
@@ -92,7 +113,11 @@ export default function Example() {
             <li>
               <a
                 href="/tcg"
-                className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white"
+                className={
+                  location.pathname === "/tcg"
+                    ? "flex flex-col items-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                    : "flex flex-col items-center p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white"
+                }
               >
                 <TbCards className="text-3xl" />
                 <span className="text-md">TCG</span>
@@ -101,6 +126,39 @@ export default function Example() {
           </ul>
         </div>
       </aside>
+
+      {/* Bottom menu */}
+      <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-600 transition-transform translate-y-0 sm:translate-y-full">
+        <div className="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">
+          <a
+            href="/"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <HiHome className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
+            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+              Home
+            </span>
+          </a>
+          <a
+            href="/pokedex"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <MdCatchingPokemon className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
+            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+              Pokedex
+            </span>
+          </a>
+          <a
+            href="/tcg"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <TbCards className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
+            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+              TCG
+            </span>
+          </a>
+        </div>
+      </div>
     </>
   );
 }
