@@ -399,7 +399,7 @@ function CardDetail() {
 														? evolution_details.held_item.name
 														: evolution_details.min_happiness
 														? evolution_details.min_happiness
-														: "TRADE EVOLUTION";
+														: " TRADE EVOLUTION ";
 												}
 											})}
 										</p>
@@ -420,7 +420,7 @@ function CardDetail() {
 																		? evolution_details.held_item.name
 																		: evolution_details.min_happiness
 																		? evolution_details.min_happiness
-																		: "TRADE EVOLUTION";
+																		: " TRADE EVOLUTION ";
 																}
 															}
 														)}
