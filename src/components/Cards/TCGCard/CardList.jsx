@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TbPokeball } from "react-icons/tb";
 import TCGCard from "./Card";
-import { TextInput } from "flowbite-react";
 
 const CardList = () => {
   const [tcgList, setTCGList] = useState(null);
@@ -24,6 +23,7 @@ const CardList = () => {
       });
   }, []);
 
+  /*
   function searchByName(search) {
     if (search) {
       fetch(
@@ -51,6 +51,7 @@ const CardList = () => {
       searchByName(event.target.value);
     }
   };
+  */
 
   if (!tcgList) {
     return (

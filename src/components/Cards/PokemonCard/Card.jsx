@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
+import AOS from "aos";
+import "aos/dist/aos";
 
 function Card({ pokemonId }) {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: "ease-out-back",
+      once: true,
+    });
+  }, []);
+
   const [pokemonCard, setPokemonCard] = useState(null);
 
   // We connect to the api to collect the data in JSON
@@ -17,14 +27,14 @@ function Card({ pokemonId }) {
   // If we don't have the data, we show a loading message
   if (!pokemonCard) {
     return (
-      <div className="relative p-4 bg-white border border-gray-200 rounded-xl shadow-xl dark:bg-gray-800 dark:border-gray-700">
+      <div className="relative p-4 bg-white rounded-xl shadow-md dark:bg-gray-800">
         <div className="flex justify-between z-20">
           <div class="flex items-center w-full space-x-2">
-            <div class="h-3 bg-gray-200 rounded-full dark:bg-gray-700 w-12"></div>
+            <div class="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-12"></div>
           </div>
-          <AiFillStar className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-900" />
+          <AiFillStar className="w-6 h-6 text-gray-400 cursor-pointer" />
         </div>
-        <div class="mt-2 flex items-center justify-center w-full h-48 bg-gray-300 rounded dark:bg-gray-700">
+        <div class="mt-2 flex items-center justify-center w-full h-72 bg-gray-300 rounded dark:bg-gray-700">
           <svg
             class="w-12 h-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
@@ -79,41 +89,47 @@ function Card({ pokemonId }) {
   return (
     <>
       <div
-        className="relative p-4 bg-white border border-gray-200 rounded-xl shadow-md dark:shadow-xl dark:bg-gray-800 dark:border-gray-700"
+        data-aos="fade-up"
+        className="relative p-4 bg-white rounded-xl shadow-md dark:shadow-xl dark:bg-gray-800"
         key={pokemonCard.name}
       >
-        <div className="absolute inset-x-4 flex justify-between z-20">
-          <div className="ms-2 text-2xl font-extrabold text-gray-500 dark:text-gray-700 select-none">
-            #{pokemonCard.id}
+        <div className="flex justify-between z-20">
+          <div className="text-2xl font-extrabold text-gray-400 dark:text-gray-700 select-none">
+            #
+            {pokemonCard.id < 10
+              ? "00" + pokemonCard.id
+              : pokemonCard.id < 100
+              ? "0" + pokemonCard.id
+              : pokemonCard.id}
           </div>
-          <AiFillStar className="w-6 h-6 text-gray-500 cursor-pointer hover:text-gray-900 dark:text-gray-700" />
+          <AiFillStar className="w-6 h-6 text-gray-400 cursor-pointer hover:text-yellow-300 dark:text-gray-700" />
         </div>
         <Link
           to={`/pokemon/${pokemonCard.id}`}
           className="relative mb-2 select-none"
         >
           <img
-            className="absolute inset-x-0 blur-2xl z-0"
+            className="absolute inset-x-0 blur-2xl z-0 touch-none"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
             alt={pokemonCard.name}
           />
           <img
-            className="relative z-10"
+            className="relative z-10 touch-none"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
             alt={pokemonCard.name}
           />
         </Link>
-        <h2 className="mb-4 mt-8 font-semibold text-xl capitalize dark:text-gray-100">
+        <h2 className="mb-4 mt-8 font-bold text-xl text-gray-800 hover:text-black capitalize dark:text-gray-100">
           <Link to={`/pokemon/${pokemonCard.id}`}>{pokemonCard.name}</Link>
         </h2>
         <div className="flex">
           <div
-            className={`me-2 text-sm font-medium mr-2 px-2.5 pt-0.5 pb-1 rounded-full ${resPriType}`}
+            className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${resPriType}`}
           >
             {priType}
           </div>
           <div
-            className={`me-2 text-sm font-medium mr-2 px-2.5 pt-0.5 pb-1 rounded-full ${resSecType}`}
+            className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${resSecType}`}
           >
             {secType}
           </div>
