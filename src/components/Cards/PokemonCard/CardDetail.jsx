@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+// Icons
 import { Link, useParams } from "react-router-dom";
 import { FaWeightHanging, FaRulerVertical, FaStar } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
@@ -56,11 +57,7 @@ function CardDetail() {
       .catch((error) => console.log(error));
   }, [pokemonID]);
 
-  // Si no tenemos los datos, mostramos un mensaje de carga
-  if (!pokemonCard) {
-    return <p>No pokemon detail</p>;
-  }
-
+  // Get the description
   let description = "";
   if (pokemonSpecies && pokemonSpecies.flavor_text_entries.length > 0) {
     description = pokemonSpecies.flavor_text_entries[1].flavor_text;
@@ -68,12 +65,15 @@ function CardDetail() {
     description = "Not a description";
   }
 
+  // Get the category
   let category = "";
   if (pokemonSpecies && pokemonSpecies.genera.length > 0) {
     category = pokemonSpecies.genera[7].genus;
   } else {
     category = "Any category";
   }
+
+  // Get growth rate
   let growthRate = "";
   if (pokemonSpecies) {
     growthRate = pokemonSpecies.growth_rate.name;
@@ -86,6 +86,8 @@ function CardDetail() {
   const hiddenAbility = pokemonCard.abilities.find(
     (ability) => ability.is_hidden
   );
+
+  // A functions for get the stats
   function Stat({ quantity }) {
     const statElements = [];
 
@@ -110,20 +112,6 @@ function CardDetail() {
     return <>{statElements.reverse()}</>;
   }
 
-  /* function EntireStat() {
-		let a = "";
-		for (let i = 0; i < 6; i++) {
-			let statName = pokemonCard.stats[i].stat.name.toUpperCase();
-			a = (
-				<div className="flex flex-col">
-					{Stat(pokemonCard.stats.base_stat / 17)}
-					<h3 className="dark:text-white text-center">{statName}</h3>
-				</div>
-			);
-		}
-		return a;
-	} */
-
   function EntireStat(pokemonCard) {
     const statElements = [];
 
@@ -145,16 +133,22 @@ function CardDetail() {
     return <div className="grid grid-cols-6 gap-4">{statElements}</div>;
   }
 
+  // Si no tenemos los datos, mostramos un mensaje de carga
+  if (!pokemonCard) {
+    return <p>No pokemon detail</p>;
+  }
+
   // We keep the types of pokemon that there are (two maximum)
   const types = pokemonCard.types.map((type) => type.type.name);
   const priType = types[0];
   const secType = types[1] || null;
 
+  // We keep the weaknesses of pokemon that there are (two maximum)
   const weakTypes = weaknesses.map((weakness) => weakness);
   const priWeak = weakTypes[0];
   const secWeak = weakTypes[1] || null;
 
-  // Array of styles for each type of Pokemon
+  // Array of styles for each type and weakness of Pokemon
   const typesStyleSheet = {
     bug: "t-bug dark:t-bug",
     dark: "t-dark dark:t-dark",
@@ -176,7 +170,7 @@ function CardDetail() {
     water: "t-water dark:t-water",
   };
 
-  // We get the corresponding style of the first and second types of Pokemon or an empty string if it hasn't been found
+  // We get the corresponding style of the first and second types and weaknesses of Pokemon or an empty string if it hasn't been found
   const resPriType = typesStyleSheet[priType] || "";
   const resSecType = typesStyleSheet[secType] || "";
   const resPriWeak = typesStyleSheet[priWeak] || "";
@@ -190,11 +184,11 @@ function CardDetail() {
             <Link
               to="/pokedex"
               type="button"
-              class="cursor-pointer shadow-xl text-white dark:text-black bg-gray-700 dark:bg-white hover:bg-gray-500 dark:hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+              className="cursor-pointer shadow-xl text-white dark:text-black bg-gray-700 dark:bg-white hover:bg-gray-500 dark:hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
             >
               <svg
                 aria-hidden="true"
-                class="w-4 h-4 rotate-180"
+                className="w-4 h-4 rotate-180"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +199,7 @@ function CardDetail() {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="sr-only">Back</span>
+              <span className="sr-only">Back</span>
             </Link>
             <FaStar className="transition text-4xl dark:text-gray-600 dark:hover:text-yellow-300 cursor-pointer" />
           </div>
