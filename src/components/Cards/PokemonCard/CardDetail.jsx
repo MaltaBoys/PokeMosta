@@ -379,6 +379,7 @@ function CardDetail() {
 								<div>
 									Primera Evo
 									<p>Name: {evolutionChain.species.name}</p>
+									<p>Url: {evolutionChain.species.url}</p>
 								</div>
 							) : (
 								<p>Something bad happened</p>
@@ -388,6 +389,7 @@ function CardDetail() {
 									<div key={evolution.species.name}>
 										Segunda Evo
 										<p>Name: {evolution.species.name}</p>
+										<p>Url: {evolution.species.url}</p>
 										<p>
 											{evolution.evolution_details.map((evolution_details) => {
 												{
@@ -399,7 +401,11 @@ function CardDetail() {
 														? evolution_details.held_item.name
 														: evolution_details.min_happiness
 														? evolution_details.min_happiness
-														: " TRADE EVOLUTION ";
+														: evolution_details.location
+														? evolution_details.location.name
+														: evolution_details.trigger
+														? evolution_details.trigger.name
+														: " Who Knows ";
 												}
 											})}
 										</p>
@@ -408,6 +414,7 @@ function CardDetail() {
 												<div key={evolution.species.name}>
 													Tercera Evo
 													<p>Name: {evolution.species.name}</p>
+													<p>Url: {evolution.species.url}</p>
 													<p>
 														{evolution.evolution_details.map(
 															(evolution_details) => {
@@ -420,7 +427,11 @@ function CardDetail() {
 																		? evolution_details.held_item.name
 																		: evolution_details.min_happiness
 																		? evolution_details.min_happiness
-																		: " TRADE EVOLUTION ";
+																		: evolution_details.location
+																		? evolution_details.location.name
+																		: evolution_details.trigger
+																		? evolution_details.trigger.name
+																		: " Who Knows ";
 																}
 															}
 														)}
