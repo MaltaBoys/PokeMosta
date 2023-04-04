@@ -16,9 +16,11 @@ function App() {
             <Route path="/pokedex" element={<Pokedex />} />
             <Route path="/tcg" element={<Tcg />} />
             <Route path="/pokemon/:id" element={<CardDetail />} />
-            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+        </Routes>
         <ScrollTop />
       </Router>
     </Flowbite>
