@@ -6,11 +6,11 @@ import CardDetail from "./components/Cards/PokemonCard/CardDetail";
 function App() {
   return (
     <Flowbite>
-      <header>
-        <Menus />
-      </header>
-      <main>
-        <Router>
+      <Router>
+        <header>
+          <Menus />
+        </header>
+        <main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pokedex" element={<Pokedex />} />
@@ -18,9 +18,9 @@ function App() {
             <Route path="/pokemon/:id" element={<CardDetail />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </Router>
-      </main>
-      <ScrollTop />
+        </main>
+        <ScrollTop />
+      </Router>
     </Flowbite>
   );
 }
