@@ -57,6 +57,11 @@ function CardDetail() {
       .catch((error) => console.log(error));
   }, [pokemonID]);
 
+  // Si no tenemos los datos, mostramos un mensaje de carga
+  if (!pokemonCard) {
+    return <p>No pokemon detail</p>;
+  }
+
   // Get the description
   let description = "";
   if (pokemonSpecies && pokemonSpecies.flavor_text_entries.length > 0) {
@@ -83,6 +88,7 @@ function CardDetail() {
   const abilities = pokemonCard.abilities
     .map((ability) => ability.ability.name)
     .join(", ");
+
   const hiddenAbility = pokemonCard.abilities.find(
     (ability) => ability.is_hidden
   );
@@ -131,11 +137,6 @@ function CardDetail() {
     }
 
     return <div className="grid grid-cols-6 gap-4">{statElements}</div>;
-  }
-
-  // Si no tenemos los datos, mostramos un mensaje de carga
-  if (!pokemonCard) {
-    return <p>No pokemon detail</p>;
   }
 
   // We keep the types of pokemon that there are (two maximum)
