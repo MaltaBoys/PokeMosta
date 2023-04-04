@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CardDetail from "./components/Cards/PokemonCard/CardDetail";
 
 function App() {
-return (
+  return (
     <Flowbite>
       <header>
         <Menus />

@@ -12,9 +12,19 @@
   <title>React App</title>
 </head>
 
-<body class="dark:bg-gray-900">
+<body class="bg-gray-50 dark:bg-gray-900">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+  <script setup>
+    import { onMounted } from 'vue'
+    import { initFlowbite } from 'flowbite'
+
+    // initialize components based on data attribute selectors
+    onMounted(() => {
+      initFlowbite();
+    })
+  </script>
 </body>
 
 </html>
