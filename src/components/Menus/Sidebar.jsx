@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Button } from "flowbite-react";
 import LogoPM from "../../assets/logotype.png";
 import { MdCatchingPokemon } from "react-icons/md";
 import { HiHome } from "react-icons/hi";
@@ -79,7 +78,7 @@ export default function Example() {
       {/* Aside Menu */}
       <aside
         id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-auto h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        className="fixed top-0 left-0 z-40 w-aauto h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">

@@ -33,20 +33,9 @@ const SignUp = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
-          />
-          Flowbite
-        </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <section className="w-full h-screen grid grid-cols-2 -mt-20">
+      <div className="flex items-center align-middle justify-center">
+        <div className="w-full bg-white rounded-xl shadow-xl ml-14 mt-20 sm:max-w-lg dark:bg-gray-800">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
@@ -63,7 +52,7 @@ const SignUp = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required=""
                   value={userCredentials.email}
@@ -88,7 +77,7 @@ const SignUp = () => {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50
-                  border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                   value={userCredentials.password}
                   onChange={(e) =>
@@ -110,7 +99,7 @@ const SignUp = () => {
                   type="password"
                   name="confirmPassword"
                   id="confirmPassword"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="••••••••"
                   required=""
                   value={userCredentials.confirmPassword}
@@ -125,7 +114,7 @@ const SignUp = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 text-base font-semibold text-white transition duration-200 bg-primary-600 rounded-lg shadow-md hover:bg-primary-700 focus:outline-none focus:ring-primary-500 focus:ring-2 focus:ring-offset-2 active:bg-primary-800"
+                  className="w-full px-4 py-2 text-base font-semibold text-white transition duration-200 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-blue-500 focus:ring-2 focus:ring-offset-2 active:bg-blue-800"
                 >
                   Create account
                 </button>
@@ -134,8 +123,8 @@ const SignUp = () => {
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Already have an account?{" "}
               <a
-                href="#"
-                className="text-primary-600 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-400"
+                href="/login"
+                className="text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
               >
                 Login
               </a>
@@ -143,6 +132,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+      <div className="bg-no-repeat bg-cover bg-[url('https://c4.wallpaperflare.com/wallpaper/117/300/936/pokemon-pokemon-omega-ruby-and-alpha-sapphire-legendary-pokemon-mega-rayquaza-pokemon-wallpaper-preview.jpg')]"></div>
     </section>
   );
 };
