@@ -196,6 +196,89 @@ function CardDetail() {
 		});
 		return <>{weaknessesDiv}</>;
 	}
+
+	function PrintEvolutionChain(evolutionChain) {
+		const chain = [];
+
+		if (evolutionChain.species) {
+			chain.push(
+				<div>
+					<p>First Evolution:</p>
+					<p>Name: {evolutionChain.species.name}</p>
+					<p>URL: {evolutionChain.species.url}</p>
+				</div>
+			);
+		}
+
+		if (evolutionChain.evolves_to) {
+			evolutionChain.evolves_to.forEach((evolution) => {
+				const details = evolution.evolution_details.map((detail) => {
+					if (detail.min_level) {
+						return `Minimum Level: ${detail.min_level}`;
+					} else if (detail.item) {
+						return `Item: ${detail.item.name}`;
+					} else if (detail.held_item) {
+						return `Held Item: ${detail.held_item.name}`;
+					} else if (detail.min_happiness) {
+						return `Minimum Happiness: ${detail.min_happiness}`;
+					} else if (detail.location) {
+						return `Location: ${detail.location.name}`;
+					} else if (detail.known_move) {
+						return `Known Move: ${detail.known_move.name}`;
+					} else if (detail.trigger) {
+						return `Trigger: ${detail.trigger.name}`;
+					} else {
+						return "Unknown Evolution Detail";
+					}
+				});
+
+				chain.push(
+					<div key={evolution.species.name}>
+						<p>Second Evolution:</p>
+						<p>Name: {evolution.species.name}</p>
+						<p>URL: {evolution.species.url}</p>
+						<p>{details}</p>
+					</div>
+				);
+
+				if (evolution.evolves_to) {
+					evolution.evolves_to.forEach((evolution) => {
+						const details = evolution.evolution_details.map((detail) => {
+							if (detail.min_level) {
+								return `Minimum Level: ${detail.min_level}`;
+							} else if (detail.item) {
+								return `Item: ${detail.item.name}`;
+							} else if (detail.held_item) {
+								return `Held Item: ${detail.held_item.name}`;
+							} else if (detail.min_happiness) {
+								return `Minimum Happiness: ${detail.min_happiness}`;
+							} else if (detail.location) {
+								return `Location: ${detail.location.name}`;
+							} else if (detail.known_move) {
+								return `Known Move: ${detail.known_move.name}`;
+							} else if (detail.trigger) {
+								return `Trigger: ${detail.trigger.name}`;
+							} else {
+								return "Unknown Evolution Detail";
+							}
+						});
+
+						chain.push(
+							<div key={evolution.species.name}>
+								<p>Third Evolution:</p>
+								<p>Name: {evolution.species.name}</p>
+								<p>URL: {evolution.species.url}</p>
+								<p>{details}</p>
+							</div>
+						);
+					});
+				}
+			});
+		}
+
+		return chain;
+	}
+
 	return (
 		<>
 			<div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4 mb-4">
@@ -372,81 +455,7 @@ function CardDetail() {
 						Evolution Line
 					</h2>
 					<div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl flex justify-center items-center">
-						<div>
-							{evolutionChain.species ? (
-								<div>
-									Primera Evo
-									<p>Name: {evolutionChain.species.name}</p>
-									<p>Url: {evolutionChain.species.url}</p>
-								</div>
-							) : (
-								<p>Something bad happened</p>
-							)}
-							{evolutionChain.evolves_to ? (
-								evolutionChain.evolves_to.map((evolution) => (
-									<div key={evolution.species.name}>
-										Segunda Evo
-										<p>Name: {evolution.species.name}</p>
-										<p>Url: {evolution.species.url}</p>
-										<p>
-											{evolution.evolution_details.map((evolution_details) => {
-												{
-													return evolution_details.min_level
-														? evolution_details.min_level
-														: evolution_details.item
-														? evolution_details.item.name
-														: evolution_details.held_item
-														? evolution_details.held_item.name
-														: evolution_details.min_happiness
-														? evolution_details.min_happiness
-														: evolution_details.location
-														? evolution_details.location.name
-														: evolution_details.trigger
-														? evolution_details.trigger.name
-														: " Who Knows ";
-												}
-											})}
-										</p>
-										{evolution.evolves_to ? (
-											evolution.evolves_to.map((evolution) => (
-												<div key={evolution.species.name}>
-													Tercera Evo
-													<p>Name: {evolution.species.name}</p>
-													<p>Url: {evolution.species.url}</p>
-													<p>
-														{evolution.evolution_details.map(
-															(evolution_details) => {
-																{
-																	return evolution_details.min_level
-																		? evolution_details.min_level
-																		: evolution_details.item
-																		? evolution_details.item.name
-																		: evolution_details.held_item
-																		? evolution_details.held_item.name
-																		: evolution_details.min_happiness
-																		? evolution_details.min_happiness
-																		: evolution_details.location
-																		? evolution_details.location.name
-																		: evolution_details.known_move
-																		? evolution_details.known_move.name
-																		: evolution_details.trigger
-																		? evolution_details.trigger.name
-																		: " Who Knows ";
-																}
-															}
-														)}
-													</p>
-												</div>
-											))
-										) : (
-											<p>No evolutionChain found</p>
-										)}
-									</div>
-								))
-							) : (
-								<p>No evolutionChain found</p>
-							)}
-						</div>
+						{PrintEvolutionChain(evolutionChain)}
 					</div>
 				</div>
 			</div>
