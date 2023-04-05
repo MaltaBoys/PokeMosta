@@ -109,12 +109,12 @@ function Card({ pokemonId }) {
           className="relative mb-2 select-none"
         >
           <img
-            className="absolute inset-x-0 blur-2xl z-0 touch-none"
+            className="absolute inset-x-0 blur-2xl z-0"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
             alt={pokemonCard.name}
           />
           <img
-            className="relative z-10 touch-none"
+            className="relative z-10"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
             alt={pokemonCard.name}
           />
