@@ -12,7 +12,7 @@ const SignUp = () => {
     const { email, password, confirmPassword } = userCredentials;
     console.log(email, password, confirmPassword);
 
-    fetch("http://localhost:5000/register", {
+    fetch("http://localhost:5000/user/register", {
       method: "POST",
       crossDomain: true,
       headers: {
