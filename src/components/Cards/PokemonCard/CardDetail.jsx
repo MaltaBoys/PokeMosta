@@ -11,6 +11,8 @@ function CardDetail() {
 	const [pokemonSpecies, setPokemonSpecies] = useState(null);
 	const [weaknesses, setWeaknesses] = useState([]);
 	const [evolutionChain, setEvolutionChain] = useState([]);
+	const [isHidden1, setIsHidden1] = useState(false);
+	const [isHidden2, setIsHidden2] = useState(true);
 
 	// States to store the search data by the ID parameter
 	let params = useParams();
@@ -72,7 +74,18 @@ function CardDetail() {
 	if (!pokemonCard) {
 		return <p>No pokemon detail</p>;
 	}
-
+	const pokemonImage =
+		"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/" +
+		pokemonCard.id +
+		".png";
+	const pokemonShinyImage =
+		"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/" +
+		pokemonCard.id +
+		".png";
+	const toggleDivs = () => {
+		setIsHidden1(!isHidden1);
+		setIsHidden2(!isHidden2);
+	};
 	// Get the description
 	let description = "";
 	if (pokemonSpecies && pokemonSpecies.flavor_text_entries.length > 0) {
@@ -304,17 +317,38 @@ function CardDetail() {
 							</svg>
 							<span className="sr-only">Back</span>
 						</Link>
-						<FaStar className="transition text-4xl dark:text-gray-600 dark:hover:text-yellow-300 cursor-pointer" />
+						<FaStar
+							onClick={toggleDivs}
+							className="transition text-4xl dark:text-gray-600 dark:hover:text-yellow-300 cursor-pointer"
+						/>
 					</div>
 					<img
-						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
+						src={pokemonImage}
 						alt={pokemonCard.name}
-						className="absolute top-0 left-0 blur-3xl z-0"
+						className={
+							isHidden1
+								? "hidden absolute top-0 blur-3xl z-0"
+								: "absolute top-0 blur-3xl z-0"
+						}
 					/>
 					<img
-						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonCard.id}.png`}
+						src={pokemonImage}
 						alt={pokemonCard.name}
-						className="z-10"
+						className={isHidden1 ? "hidden z-10" : "z-10"}
+					/>
+					<img
+						src={pokemonShinyImage}
+						alt={pokemonCard.name}
+						className={
+							isHidden2
+								? "hidden absolute top-0 blur-3xl z-0"
+								: "absolute top-0 blur-3xl z-0"
+						}
+					/>
+					<img
+						src={pokemonShinyImage}
+						alt={pokemonCard.name}
+						className={isHidden2 ? "hidden z-10" : "z-10"}
 					/>
 				</div>
 				<div className="col-span-3 pt-4">
