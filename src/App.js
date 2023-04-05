@@ -10,7 +10,7 @@ function App() {
         <header>
           <Menus />
         </header>
-        <main>
+        <main className="mt-20 ml-0 mb-20 sm:ml-32 sm:mb-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pokedex" element={<Pokedex />} />
