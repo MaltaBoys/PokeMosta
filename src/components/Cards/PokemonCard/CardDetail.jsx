@@ -154,10 +154,8 @@ function CardDetail() {
 	const priType = types[0];
 	const secType = types[1] || null;
 
-	// We keep the weaknesses of pokemon that there are (two maximum)
+	// We keep the weaknesses of pokemon that there are (eight maximum)
 	const weakTypes = weaknesses.map((weakness) => weakness);
-	const priWeak = weakTypes[0];
-	const secWeak = weakTypes[1] || null;
 
 	// Array of styles for each type and weakness of Pokemon
 	const typesStyleSheet = {
@@ -184,9 +182,20 @@ function CardDetail() {
 	// We get the corresponding style of the first and second types and weaknesses of Pokemon or an empty string if it hasn't been found
 	const resPriType = typesStyleSheet[priType] || "";
 	const resSecType = typesStyleSheet[secType] || "";
-	const resPriWeak = typesStyleSheet[priWeak] || "";
-	const resSecWeak = typesStyleSheet[secWeak] || "";
 
+	function PrintWeaknesses(weakTypes) {
+		const weaknessesDiv = [];
+		weakTypes.forEach((element) => {
+			weaknessesDiv.push(
+				<div
+					className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${typesStyleSheet[element]}`}
+				>
+					{element}
+				</div>
+			);
+		});
+		return <>{weaknessesDiv}</>;
+	}
 	return (
 		<>
 			<div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4 mb-4">
@@ -345,18 +354,7 @@ function CardDetail() {
 								Weaknesses
 							</p>
 							<p className="text-md font-medium dark:text-white capitalize">
-								<div className="flex">
-									<div
-										className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${resPriWeak}`}
-									>
-										{priWeak}
-									</div>
-									<div
-										className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${resSecWeak}`}
-									>
-										{secWeak}
-									</div>
-								</div>
+								<div className="flex">{PrintWeaknesses(weakTypes)}</div>
 							</p>
 						</div>
 					</div>
@@ -429,6 +427,8 @@ function CardDetail() {
 																		? evolution_details.min_happiness
 																		: evolution_details.location
 																		? evolution_details.location.name
+																		: evolution_details.known_move
+																		? evolution_details.known_move.name
 																		: evolution_details.trigger
 																		? evolution_details.trigger.name
 																		: " Who Knows ";
