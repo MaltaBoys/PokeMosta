@@ -356,28 +356,32 @@ function CardDetail() {
 						alt={pokemonCard.name}
 						className={
 							isHidden1
-								? "hidden absolute top-0 blur-3xl z-0"
-								: "absolute top-0 blur-3xl z-0"
+								? "hidden absolute top-0 blur-3xl z-0 select-none"
+								: "absolute top-0 blur-3xl z-0 select-none"
 						}
 					/>
 					<img
 						src={pokemonImage}
 						alt={pokemonCard.name}
-						className={isHidden1 ? "hidden z-10" : "z-10"}
+						className={
+							isHidden1 ? "hidden z-10 select-none" : "z-10 select-none"
+						}
 					/>
 					<img
 						src={pokemonShinyImage}
 						alt={pokemonCard.name}
 						className={
 							isHidden2
-								? "hidden absolute top-0 blur-3xl z-0"
-								: "absolute top-0 blur-3xl z-0"
+								? "hidden absolute top-0 blur-3xl z-0 select-none"
+								: "absolute top-0 blur-3xl z-0 select-none"
 						}
 					/>
 					<img
 						src={pokemonShinyImage}
 						alt={pokemonCard.name}
-						className={isHidden2 ? "hidden z-10" : "z-10"}
+						className={
+							isHidden2 ? "hidden z-10 select-none" : "z-10 select-none"
+						}
 					/>
 				</div>
 				<div className="col-span-3 pt-4">
