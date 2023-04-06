@@ -14,61 +14,61 @@ function CardDetail() {
 	const [isHidden1, setIsHidden1] = useState(false);
 	const [isHidden2, setIsHidden2] = useState(true);
 
-  // States to store the search data by the ID parameter
-  let params = useParams();
-  const pokemonID = params.id;
+	// States to store the search data by the ID parameter
+	let params = useParams();
+	const pokemonID = params.id;
 
-  // We connect to the api to collect the data in JSON
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemonCard(data);
-      });
-  }, [pokemonID]);
+	// We connect to the api to collect the data in JSON
+	useEffect(() => {
+		fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
+			.then((response) => response.json())
+			.then((data) => {
+				setPokemonCard(data);
+			});
+	}, [pokemonID]);
 
-  useEffect(() => {
-    if (pokemonCard) {
-      fetch(pokemonCard.species.url)
-        .then((response) => response.json())
-        .then((data) => {
-          setPokemonSpecies(data);
-        });
-    }
-  }, [pokemonCard]);
+	useEffect(() => {
+		if (pokemonCard) {
+			fetch(pokemonCard.species.url)
+				.then((response) => response.json())
+				.then((data) => {
+					setPokemonSpecies(data);
+				});
+		}
+	}, [pokemonCard]);
 
-  useEffect(() => {
-    if (pokemonSpecies) {
-      fetch(pokemonSpecies.evolution_chain.url)
-        .then((response) => response.json())
-        .then((data) => {
-          setEvolutionChain(data.chain);
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [pokemonSpecies]);
-  useEffect(() => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
-      .then((response) => {
-        const types = response.data.types.map((type) => type.type.name);
-        const promises = types.map((type) =>
-          axios.get(`https://pokeapi.co/api/v2/type/${type}`)
-        );
-        Promise.all(promises)
-          .then((responses) => {
-            const weaknesses = responses
-              .map(
-                (response) => response.data.damage_relations.double_damage_from
-              )
-              .flat()
-              .map((weakness) => weakness.name);
-            setWeaknesses(weaknesses);
-          })
-          .catch((error) => console.log(error));
-      })
-      .catch((error) => console.log(error));
-  }, [pokemonID]);
+	useEffect(() => {
+		if (pokemonSpecies) {
+			fetch(pokemonSpecies.evolution_chain.url)
+				.then((response) => response.json())
+				.then((data) => {
+					setEvolutionChain(data.chain);
+				})
+				.catch((error) => console.error(error));
+		}
+	}, [pokemonSpecies]);
+	useEffect(() => {
+		axios
+			.get(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
+			.then((response) => {
+				const types = response.data.types.map((type) => type.type.name);
+				const promises = types.map((type) =>
+					axios.get(`https://pokeapi.co/api/v2/type/${type}`)
+				);
+				Promise.all(promises)
+					.then((responses) => {
+						const weaknesses = responses
+							.map(
+								(response) => response.data.damage_relations.double_damage_from
+							)
+							.flat()
+							.map((weakness) => weakness.name);
+						setWeaknesses(weaknesses);
+					})
+					.catch((error) => console.log(error));
+			})
+			.catch((error) => console.log(error));
+	}, [pokemonID]);
 
 	// Si no tenemos los datos, mostramos un mensaje de carga
 	if (!pokemonCard) {
@@ -94,103 +94,103 @@ function CardDetail() {
 		description = "Not a description";
 	}
 
-  // Get the category
-  let category = "";
-  if (pokemonSpecies && pokemonSpecies.genera.length > 0) {
-    category = pokemonSpecies.genera[7].genus;
-  } else {
-    category = "Any category";
-  }
+	// Get the category
+	let category = "";
+	if (pokemonSpecies && pokemonSpecies.genera.length > 0) {
+		category = pokemonSpecies.genera[7].genus;
+	} else {
+		category = "Any category";
+	}
 
-  // Get growth rate
-  let growthRate = "";
-  if (pokemonSpecies) {
-    growthRate = pokemonSpecies.growth_rate.name;
-  }
+	// Get growth rate
+	let growthRate = "";
+	if (pokemonSpecies) {
+		growthRate = pokemonSpecies.growth_rate.name;
+	}
 
-  // We keep the types of pokemon that there are (two maximum)
-  const abilities = pokemonCard.abilities
-    .map((ability) => ability.ability.name)
-    .join(", ");
-  const hiddenAbility = pokemonCard.abilities.find(
-    (ability) => ability.is_hidden
-  );
+	// We keep the types of pokemon that there are (two maximum)
+	const abilities = pokemonCard.abilities
+		.map((ability) => ability.ability.name)
+		.join(", ");
+	const hiddenAbility = pokemonCard.abilities.find(
+		(ability) => ability.is_hidden
+	);
 
-  // A functions for get the stats
-  function Stat({ quantity }) {
-    const statElements = [];
+	// A functions for get the stats
+	function Stat({ quantity }) {
+		const statElements = [];
 
-    for (let i = 0; i < 15; i++) {
-      if (quantity > i) {
-        statElements.push(
-          <div
-            key={i}
-            className="w-full h-1 mb-4 rounded-full dark:bg-red-600 bg-yellow-200 "
-          ></div>
-        );
-      } else {
-        statElements.push(
-          <div
-            key={i}
-            className="w-full h-1 mb-4 rounded-full dark:bg-gray-600 bg-gray-400"
-          ></div>
-        );
-      }
-    }
+		for (let i = 0; i < 15; i++) {
+			if (quantity > i) {
+				statElements.push(
+					<div
+						key={i}
+						className="w-full h-1 mb-4 rounded-full dark:bg-red-600 bg-yellow-200 "
+					></div>
+				);
+			} else {
+				statElements.push(
+					<div
+						key={i}
+						className="w-full h-1 mb-4 rounded-full dark:bg-gray-600 bg-gray-400"
+					></div>
+				);
+			}
+		}
 
-    return <>{statElements.reverse()}</>;
-  }
+		return <>{statElements.reverse()}</>;
+	}
 
-  function EntireStat(pokemonCard) {
-    const statElements = [];
+	function EntireStat(pokemonCard) {
+		const statElements = [];
 
-    for (let i = 0; i < 6; i++) {
-      const statNamePure = pokemonCard.stats[i].stat.name;
-      const statName =
-        statNamePure.charAt(0).toUpperCase() + statNamePure.slice(1);
+		for (let i = 0; i < 6; i++) {
+			const statNamePure = pokemonCard.stats[i].stat.name;
+			const statName =
+				statNamePure.charAt(0).toUpperCase() + statNamePure.slice(1);
 
-      const statValue = pokemonCard.stats[i].base_stat / 17;
+			const statValue = pokemonCard.stats[i].base_stat / 17;
 
-      statElements.push(
-        <div key={i}>
-          <Stat quantity={statValue} />
-          <h3 className="dark:text-gray-300 text-center text-sm">{statName}</h3>
-        </div>
-      );
-    }
+			statElements.push(
+				<div key={i}>
+					<Stat quantity={statValue} />
+					<h3 className="dark:text-gray-300 text-center text-sm">{statName}</h3>
+				</div>
+			);
+		}
 
-    return <div className="grid grid-cols-6 gap-4">{statElements}</div>;
-  }
+		return <div className="grid grid-cols-6 gap-4">{statElements}</div>;
+	}
 
-  // We keep the types of pokemon that there are (two maximum)
-  const types = pokemonCard.types.map((type) => type.type.name);
-  const priType = types[0];
-  const secType = types[1] || null;
+	// We keep the types of pokemon that there are (two maximum)
+	const types = pokemonCard.types.map((type) => type.type.name);
+	const priType = types[0];
+	const secType = types[1] || null;
 
 	// We keep the weaknesses of pokemon that there are (eight maximum)
 	const weakTypes = weaknesses.map((weakness) => weakness);
 
-  // Array of styles for each type and weakness of Pokemon
-  const typesStyleSheet = {
-    bug: "t-bug dark:t-bug",
-    dark: "t-dark dark:t-dark",
-    dragon: "t-dragon dark:t-dragon",
-    electric: "t-electric dark:t-electric",
-    fairy: "t-fairy dark:t-fairy",
-    fighting: "t-fighting dark:t-fighting",
-    fire: "t-fire dark:t-fire",
-    flying: "t-flying dark:t-flying",
-    ghost: "t-ghost dark:t-ghost",
-    grass: "t-grass dark:t-grass",
-    ground: "t-ground dark:t-ground",
-    ice: "t-ice dark:t-ice",
-    normal: "t-normal dark:t-normal",
-    poison: "t-poison dark:t-poison",
-    psychic: "t-psychic dark:t-psychic",
-    rock: "t-rock dark:t-rock",
-    steel: "t-steel dark:t-steel",
-    water: "t-water dark:t-water",
-  };
+	// Array of styles for each type and weakness of Pokemon
+	const typesStyleSheet = {
+		bug: "t-bug dark:t-bug",
+		dark: "t-dark dark:t-dark",
+		dragon: "t-dragon dark:t-dragon",
+		electric: "t-electric dark:t-electric",
+		fairy: "t-fairy dark:t-fairy",
+		fighting: "t-fighting dark:t-fighting",
+		fire: "t-fire dark:t-fire",
+		flying: "t-flying dark:t-flying",
+		ghost: "t-ghost dark:t-ghost",
+		grass: "t-grass dark:t-grass",
+		ground: "t-ground dark:t-ground",
+		ice: "t-ice dark:t-ice",
+		normal: "t-normal dark:t-normal",
+		poison: "t-poison dark:t-poison",
+		psychic: "t-psychic dark:t-psychic",
+		rock: "t-rock dark:t-rock",
+		steel: "t-steel dark:t-steel",
+		water: "t-water dark:t-water",
+	};
 
 	// We get the corresponding style of the first and second types and weaknesses of Pokemon or an empty string if it hasn't been found
 	const resPriType = typesStyleSheet[priType] || "";
@@ -210,6 +210,13 @@ function CardDetail() {
 		return <>{weaknessesDiv}</>;
 	}
 
+	function getEvoImage(imgsource) {
+		const url = imgsource.species.url;
+		const regex = /(\d+)\/$/;
+		const numberId = url.match(regex)[1];
+		const stringImgPoke = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${numberId}.png`;
+		return <img src={stringImgPoke} alt="PokemonChainImage" />;
+	}
 	function PrintEvolutionChain(evolutionChain) {
 		const chain = [];
 
@@ -219,18 +226,27 @@ function CardDetail() {
 					<p>First Evolution:</p>
 					<p>Name: {evolutionChain.species.name}</p>
 					<p>URL: {evolutionChain.species.url}</p>
+					{getEvoImage(evolutionChain)}
 				</div>
 			);
 		}
 
 		if (evolutionChain.evolves_to) {
 			evolutionChain.evolves_to.forEach((evolution) => {
+				let itemEvo = false;
+				let itemImg = "";
+				let itemTrade = false;
+				let itemTradeImg = "";
 				const details = evolution.evolution_details.map((detail) => {
 					if (detail.min_level) {
 						return `Minimum Level: ${detail.min_level}`;
 					} else if (detail.item) {
+						itemEvo = true;
+						itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
 						return `Item: ${detail.item.name}`;
 					} else if (detail.held_item) {
+						itemTrade = true;
+						itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
 						return `Held Item: ${detail.held_item.name}`;
 					} else if (detail.min_happiness) {
 						return `Minimum Happiness: ${detail.min_happiness}`;
@@ -244,24 +260,34 @@ function CardDetail() {
 						return "Unknown Evolution Detail";
 					}
 				});
-
 				chain.push(
 					<div key={evolution.species.name}>
 						<p>Second Evolution:</p>
 						<p>Name: {evolution.species.name}</p>
 						<p>URL: {evolution.species.url}</p>
 						<p>{details}</p>
+						{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+						{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+						{getEvoImage(evolution)}
 					</div>
 				);
 
 				if (evolution.evolves_to) {
 					evolution.evolves_to.forEach((evolution) => {
+						let itemEvo = false;
+						let itemImg = "";
+						let itemTrade = false;
+						let itemTradeImg = "";
 						const details = evolution.evolution_details.map((detail) => {
 							if (detail.min_level) {
 								return `Minimum Level: ${detail.min_level}`;
 							} else if (detail.item) {
+								itemEvo = true;
+								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
 								return `Item: ${detail.item.name}`;
 							} else if (detail.held_item) {
+								itemTrade = true;
+								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
 								return `Held Item: ${detail.held_item.name}`;
 							} else if (detail.min_happiness) {
 								return `Minimum Happiness: ${detail.min_happiness}`;
@@ -282,6 +308,9 @@ function CardDetail() {
 								<p>Name: {evolution.species.name}</p>
 								<p>URL: {evolution.species.url}</p>
 								<p>{details}</p>
+								{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+								{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+								{getEvoImage(evolution)}
 							</div>
 						);
 					});
@@ -289,7 +318,7 @@ function CardDetail() {
 			});
 		}
 
-		return chain;
+		return <div className="flex flex-col gap-3">{chain}</div>;
 	}
 
 	return (
@@ -305,14 +334,14 @@ function CardDetail() {
 							<svg
 								aria-hidden="true"
 								className="w-4 h-4 rotate-180"
-								fill="currentColor"
+								fillRule="currentColor"
 								viewBox="0 0 20 20"
 								xmlns="http://www.w3.org/2000/svg"
 							>
 								<path
-									fill-rule="evenodd"
+									fillRule="evenodd"
 									d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-									clip-rule="evenodd"
+									clipRule="evenodd"
 								></path>
 							</svg>
 							<span className="sr-only">Back</span>
