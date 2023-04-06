@@ -226,7 +226,6 @@ function CardDetail() {
 					<p>First Evolution:</p>
 					<p>Name: {evolutionChain.species.name}</p>
 					<p>URL: {evolutionChain.species.url}</p>
-					<p>numberId</p>
 					{getEvoImage(evolutionChain)}
 				</div>
 			);
@@ -234,12 +233,20 @@ function CardDetail() {
 
 		if (evolutionChain.evolves_to) {
 			evolutionChain.evolves_to.forEach((evolution) => {
+				let itemEvo = false;
+				let itemImg = "";
+				let itemTrade = false;
+				let itemTradeImg = "";
 				const details = evolution.evolution_details.map((detail) => {
 					if (detail.min_level) {
 						return `Minimum Level: ${detail.min_level}`;
 					} else if (detail.item) {
+						itemEvo = true;
+						itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
 						return `Item: ${detail.item.name}`;
 					} else if (detail.held_item) {
+						itemTrade = true;
+						itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
 						return `Held Item: ${detail.held_item.name}`;
 					} else if (detail.min_happiness) {
 						return `Minimum Happiness: ${detail.min_happiness}`;
@@ -259,18 +266,28 @@ function CardDetail() {
 						<p>Name: {evolution.species.name}</p>
 						<p>URL: {evolution.species.url}</p>
 						<p>{details}</p>
+						{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+						{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
 						{getEvoImage(evolution)}
 					</div>
 				);
 
 				if (evolution.evolves_to) {
 					evolution.evolves_to.forEach((evolution) => {
+						let itemEvo = false;
+						let itemImg = "";
+						let itemTrade = false;
+						let itemTradeImg = "";
 						const details = evolution.evolution_details.map((detail) => {
 							if (detail.min_level) {
 								return `Minimum Level: ${detail.min_level}`;
 							} else if (detail.item) {
+								itemEvo = true;
+								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
 								return `Item: ${detail.item.name}`;
 							} else if (detail.held_item) {
+								itemTrade = true;
+								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
 								return `Held Item: ${detail.held_item.name}`;
 							} else if (detail.min_happiness) {
 								return `Minimum Happiness: ${detail.min_happiness}`;
@@ -284,12 +301,15 @@ function CardDetail() {
 								return "Unknown Evolution Detail";
 							}
 						});
+
 						chain.push(
 							<div key={evolution.species.name}>
 								<p>Third Evolution:</p>
 								<p>Name: {evolution.species.name}</p>
 								<p>URL: {evolution.species.url}</p>
 								<p>{details}</p>
+								{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+								{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
 								{getEvoImage(evolution)}
 							</div>
 						);
