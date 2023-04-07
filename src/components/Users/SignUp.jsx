@@ -10,7 +10,6 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password, confirmPassword } = userCredentials;
-    console.log(email, password, confirmPassword);
 
     fetch("http://localhost:5000/user/register", {
       method: "POST",
@@ -28,7 +27,7 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userRegister");
+        window.location.href = "/login";
       });
   };
 
