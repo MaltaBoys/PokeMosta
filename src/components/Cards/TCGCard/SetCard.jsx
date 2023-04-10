@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ColorThief from "color-thief";
 
 const SetCard = ({ pokemonSetId }) => {
   const [pokemonSetCard, setPokemonSetCard] = useState(null);
-  const [backgroundColor, setBackgroundColor] = useState("");
 
   // We connect to the api to collect the data in JSON
   useEffect(() => {
@@ -14,18 +12,6 @@ const SetCard = ({ pokemonSetId }) => {
         setPokemonSetCard(data.data);
       });
   }, [pokemonSetId]);
-
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    img.src = pokemonSetCard.images.logo;
-
-    img.addEventListener("load", () => {
-      const colorThief = new ColorThief();
-      const color = colorThief.getColor(img);
-      setBackgroundColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
-    });
-  }, [pokemonSetCard.images.logo]);
 
   // If we don't have the data, we show a loading message
   if (!pokemonSetCard) {
@@ -63,13 +49,17 @@ const SetCard = ({ pokemonSetId }) => {
       >
         <Link
           to={`/tcg/${pokemonSetCard.id}`}
-          className="mb-2 select-none h-32 p-4 rounded-lg flex items-center justify-center bg-gray-700"
-          style={{ backgroundColor }}
+          className="relative mb-2 select-none h-32 p-4 rounded-lg flex items-center justify-center bg-gray-700 overflow-hidden"
         >
           <img
             src={pokemonImage}
             alt={pokemonSetCard.name}
-            className="h-full"
+            className="absolute blur-xl z-0"
+          />
+          <img
+            src={pokemonImage}
+            alt={pokemonSetCard.name}
+            className="h-full z-10"
           />
         </Link>
         <h2 className="mb-4 font-bold text-xl text-gray-800 hover:text-black capitalize dark:text-gray-100">
