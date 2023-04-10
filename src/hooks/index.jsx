@@ -1,8 +1,9 @@
 // Components
 export { default as Menus } from "../components/Menus/Sidebar";
-export { default as PokemonCard } from "../components/Cards/PokemonCard/Card";
 export { default as PokemonList } from "../components/Cards/PokemonCard/ListCards";
-export { default as Pokemon } from "../components/Cards/PokemonCard/CardDetail";
+export { default as PokemonCard } from "../components/Cards/PokemonCard/Card";
+export { default as PokemonSetList } from "../components/Cards/TCGCard/SetList";
+export { default as PokemonSetCard } from "../components/Cards/TCGCard/SetCard";
 
 // Functions
 export { default as ScrollTop } from "../components/Functions/ScrollTop";

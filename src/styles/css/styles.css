@@ -3,97 +3,97 @@
 @import "../../../node_modules/tailwindcss/utilities.css";
 @import "../../fonts/index.css";
 .t-bug {
-	color: #fff;
-	background-color: #1b4b27;
+  color: #fff;
+  background-color: #1b4b27;
 }
 
 .t-dark {
-	color: #fff;
-	background-color: #040707;
+  color: #fff;
+  background-color: #040707;
 }
 
 .t-dragon {
-	color: #fff;
-	background-color: #448a95;
+  color: #fff;
+  background-color: #448a95;
 }
 
 .t-electric {
-	color: #202020;
-	background-color: #e2e32a;
+  color: #202020;
+  background-color: #e2e32a;
 }
 
 .t-fairy {
-	color: #fff;
-	background-color: #e31366;
+  color: #fff;
+  background-color: #e31366;
 }
 
 .t-fighting {
-	color: #fff;
-	background-color: #9b462c;
+  color: #fff;
+  background-color: #9b462c;
 }
 
 .t-fire {
-	color: #fff;
-	background-color: #ac1d24;
+  color: #fff;
+  background-color: #ac1d24;
 }
 
 .t-flying {
-	color: #fff;
-	background-color: #4b677d;
+  color: #fff;
+  background-color: #4b677d;
 }
 
 .t-ghost {
-	color: #fff;
-	background-color: #32336b;
+  color: #fff;
+  background-color: #32336b;
 }
 
 .t-grass {
-	color: #fff;
-	background-color: #157b3a;
+  color: #fff;
+  background-color: #157b3a;
 }
 
 .t-ground {
-	color: #fff;
-	background-color: #a7702d;
+  color: #fff;
+  background-color: #a7702d;
 }
 
 .t-ice {
-	color: #d7f1f9;
-	background-color: #86d2f5;
+  color: #d7f1f9;
+  background-color: #86d2f5;
 }
 
 .t-normal {
-	color: #fff;
-	background-color: #76525c;
+  color: #fff;
+  background-color: #76525c;
 }
 
 .t-poison {
-	color: #fff;
-	background-color: #5e2d89;
+  color: #fff;
+  background-color: #5e2d89;
 }
 
 .t-psychic {
-	color: #fff;
-	background-color: #a42a6b;
+  color: #fff;
+  background-color: #a42a6b;
 }
 
 .t-rock {
-	color: #fff;
-	background-color: #48180a;
+  color: #fff;
+  background-color: #48180a;
 }
 
 .t-steel {
-	color: #fff;
-	background-color: #60756e;
+  color: #fff;
+  background-color: #60756e;
 }
 
 .t-water {
-	color: #fff;
-	background-color: #1452e3;
+  color: #fff;
+  background-color: #1452e3;
 }
 
 body {
-	font-family: "Poppins", "Inter", sans-serif;
+  font-family: "Poppins", "Inter", sans-serif;
 }
 
 /*# sourceMappingURL=styles.css.map */
