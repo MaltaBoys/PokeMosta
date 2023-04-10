@@ -1,12 +1,12 @@
 import React from "react";
-import CardList from "../components/Cards/TCGCard/CardList";
+import { PokemonSetList } from "../hooks";
 
 const Tcg = () => {
-	return (
-		<>
-			<CardList />
-		</>
-	);
+  return (
+    <>
+      <PokemonSetList />
+    </>
+  );
 };
 
 export default Tcg;

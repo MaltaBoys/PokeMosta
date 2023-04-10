@@ -1,5 +1,14 @@
 import { Flowbite } from "flowbite-react";
-import { Menus, Home, Tcg, Pokedex, ScrollTop, Register, Login, User } from "./hooks";
+import {
+  Menus,
+  Home,
+  Tcg,
+  Pokedex,
+  ScrollTop,
+  Register,
+  Login,
+  User,
+} from "./hooks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CardDetail from "./components/Cards/PokemonCard/CardDetail";
 

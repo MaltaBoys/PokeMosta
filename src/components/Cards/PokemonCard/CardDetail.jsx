@@ -196,80 +196,118 @@ function CardDetail() {
   const resPriType = typesStyleSheet[priType] || "";
   const resSecType = typesStyleSheet[secType] || "";
 
+  // We take out the weaknesses of each pokemon
   function PrintWeaknesses(weakTypes) {
     const weaknessesDiv = [];
+
     weakTypes.forEach((element) => {
       weaknessesDiv.push(
         <div
-          className={`leading-none me-2 text-xs font-medium mr-2 px-3 pt-2.5 pb-2 rounded-md ${typesStyleSheet[element]}`}
+          className={`leading-none me-2 text-xs font-medium px-3 pt-2.5 pb-2 rounded-md ${typesStyleSheet[element]}`}
         >
           {element}
         </div>
       );
     });
+
     return <>{weaknessesDiv}</>;
   }
 
+  // We get the image of the pokemon depending on its evolution
   function getEvoImage(imgsource) {
+    // We take the pokemon ID
     const url = imgsource.species.url;
     const regex = /(\d+)\/$/;
     const numberId = url.match(regex)[1];
     const stringImgPoke = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${numberId}.png`;
-    return <img src={stringImgPoke} alt="PokemonChainImage" />;
+
+    return (
+      <img
+        src={stringImgPoke}
+        alt="PokemonChainImage"
+        className="p-4 dark:bg-gray-700 rounded-full"
+      />
+    );
   }
+
+  // Print the evolution line
   function PrintEvolutionChain(evolutionChain) {
     const chain = [];
 
     if (evolutionChain.species) {
+      const url = evolutionChain.species.url;
+      const regex = /(\d+)\/$/;
+      const numberId = url.match(regex)[1];
+
       chain.push(
-        <div>
-          <p>First Evolution:</p>
-          <p>Name: {evolutionChain.species.name}</p>
-          <p>URL: {evolutionChain.species.url}</p>
+        <div className="col-span-2 flex flex-col items-center justify-center">
           {getEvoImage(evolutionChain)}
+          <p className="dark:text-gray-200 capitalize font-semibold mt-4">
+            {evolutionChain.species.name}&nbsp;
+            <span className="dark:text-gray-400 font-medium">#{numberId}</span>
+          </p>
         </div>
       );
     }
 
     if (evolutionChain.evolves_to) {
+      const url = evolutionChain.species.url;
+      const regex = /(\d+)\/$/;
+      const numberId = url.match(regex)[1];
+
       evolutionChain.evolves_to.forEach((evolution) => {
         let itemEvo = false;
         let itemImg = "";
         let itemTrade = false;
         let itemTradeImg = "";
+
         const details = evolution.evolution_details.map((detail) => {
           if (detail.min_level) {
-            return `Minimum Level: ${detail.min_level}`;
+            return `Lvl ${detail.min_level}`;
           } else if (detail.item) {
             itemEvo = true;
             itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-            return `Item: ${detail.item.name}`;
+            return detail.item.name;
           } else if (detail.held_item) {
             itemTrade = true;
             itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-            return `Held Item: ${detail.held_item.name}`;
+            return detail.held_item.name;
           } else if (detail.min_happiness) {
-            return `Minimum Happiness: ${detail.min_happiness}`;
+            return detail.min_happiness;
           } else if (detail.location) {
-            return `Location: ${detail.location.name}`;
+            return detail.location.name;
           } else if (detail.known_move) {
-            return `Known Move: ${detail.known_move.name}`;
+            return detail.known_move.name;
           } else if (detail.trigger) {
-            return `Trigger: ${detail.trigger.name}`;
+            return detail.trigger.name;
           } else {
-            return "Unknown Evolution Detail";
+            return "Unknown";
           }
         });
+
         chain.push(
-          <div key={evolution.species.name}>
-            <p>Second Evolution:</p>
-            <p>Name: {evolution.species.name}</p>
-            <p>URL: {evolution.species.url}</p>
-            <p>{details}</p>
-            {itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-            {itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-            {getEvoImage(evolution)}
-          </div>
+          <>
+            <div className="relative flex flex-col items-center justify-center">
+              <p className="absolute dark:text-gray-400 font-medium text-sm top-1/4">
+                {details}
+              </p>
+              <div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
+            </div>
+            <div
+              key={evolution.species.name}
+              className="col-span-2 flex flex-col items-center justify-center"
+            >
+              {itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+              {itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+              {getEvoImage(evolution)}
+              <p className="dark:text-gray-200 capitalize font-semibold mt-4">
+                {evolution.species.name}&nbsp;
+                <span className="dark:text-gray-400 font-medium">
+                  #{numberId}
+                </span>
+              </p>
+            </div>
+          </>
         );
 
         if (evolution.evolves_to) {
@@ -278,47 +316,53 @@ function CardDetail() {
             let itemImg = "";
             let itemTrade = false;
             let itemTradeImg = "";
+
             const details = evolution.evolution_details.map((detail) => {
               if (detail.min_level) {
-                return `Minimum Level: ${detail.min_level}`;
+                return `Lvl ${detail.min_level}`;
               } else if (detail.item) {
                 itemEvo = true;
                 itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-                return `Item: ${detail.item.name}`;
+                return detail.item.name;
               } else if (detail.held_item) {
                 itemTrade = true;
                 itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-                return `Held Item: ${detail.held_item.name}`;
+                return detail.held_item.name;
               } else if (detail.min_happiness) {
-                return `Minimum Happiness: ${detail.min_happiness}`;
+                return detail.min_happiness;
               } else if (detail.location) {
-                return `Location: ${detail.location.name}`;
+                return detail.location.name;
               } else if (detail.known_move) {
-                return `Known Move: ${detail.known_move.name}`;
+                return detail.known_move.name;
               } else if (detail.trigger) {
-                return `Trigger: ${detail.trigger.name}`;
+                return detail.trigger.name;
               } else {
                 return "Unknown Evolution Detail";
               }
             });
 
             chain.push(
-              <div key={evolution.species.name}>
-                <p>Third Evolution:</p>
-                <p>Name: {evolution.species.name}</p>
-                <p>URL: {evolution.species.url}</p>
-                <p>{details}</p>
-                {itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-                {itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-                {getEvoImage(evolution)}
-              </div>
+              <>
+                <div className="grid-cols-1">
+                  {details}
+                  <div className="w-full h-2 dark:bg-gray-50"></div>
+                </div>
+                <div key={evolution.species.name} className="grid-cols-2">
+                  {itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+                  {itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+                  {getEvoImage(evolution)}
+                  <p className="dark:text-gray-200 capitalize font-semibold mt-4">
+                    {evolution.species.name}
+                  </p>
+                </div>
+              </>
             );
           });
         }
       });
     }
 
-    return <div className="flex flex-col gap-3">{chain}</div>;
+    return <>{chain}</>;
   }
 
   return (
@@ -410,7 +454,7 @@ function CardDetail() {
               <div className="flex flex-col justify-between">
                 <p className="text-md font-medium dark:text-gray-500">Weight</p>
                 <p className="text-2xl font-semibold dark:text-white">
-                  {pokemonCard.weight} KG
+                  {pokemonCard.weight / 10} KG
                 </p>
               </div>
             </div>
@@ -421,7 +465,7 @@ function CardDetail() {
               <div className="flex flex-col justify-between">
                 <p className="text-md font-medium dark:text-gray-500">Height</p>
                 <p className="text-2xl font-semibold dark:text-gray-100">
-                  {pokemonCard.height} CM
+                  {pokemonCard.height / 10} M
                 </p>
               </div>
             </div>
@@ -489,7 +533,7 @@ function CardDetail() {
               <p className="text-sm font-medium dark:text-gray-500 mb-2">
                 Growth Rate
               </p>
-              <p className="text-md font-medium dark:text-white capitalize">
+              <p className="text-md font-medium dark:text-white">
                 {growthRate}
               </p>
               {/* - Erratic: 600,000 exp at level 100
@@ -503,8 +547,10 @@ function CardDetail() {
               <p className="text-sm font-medium dark:text-gray-500 mb-2">
                 Weaknesses
               </p>
-              <p className="text-md font-medium dark:text-white capitalize">
-                <div className="flex">{PrintWeaknesses(weakTypes)}</div>
+              <p className="text-md font-medium dark:text-white">
+                <div className="flex flex-wrap items-start gap-y-2">
+                  {PrintWeaknesses(weakTypes)}
+                </div>
               </p>
             </div>
           </div>
@@ -521,7 +567,7 @@ function CardDetail() {
           <h2 className="text-2xl font-semibold dark:text-white mb-4">
             Evolution Line
           </h2>
-          <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl flex justify-center items-center">
+          <div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl grid grid-cols-8">
             {PrintEvolutionChain(evolutionChain)}
           </div>
         </div>
