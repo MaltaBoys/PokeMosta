@@ -8,6 +8,7 @@ import {
   Register,
   Login,
   User,
+  Error404,
 } from "./hooks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CardDetail from "./components/Cards/PokemonCard/CardDetail";
@@ -31,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/404" element={<Error404 />} />
         </Routes>
         <ScrollTop />
       </Router>
