@@ -15,3 +15,6 @@ export { default as Tcg } from "../pages/Tcg";
 export { default as Register } from "../components/Users/SignUp";
 export { default as Login } from "../components/Users/SignIn";
 export { default as User } from "../components/Users/User";
+
+// Errors
+export { default as Error404 } from "../pages/errors/Error404";
