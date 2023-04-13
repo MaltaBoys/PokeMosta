@@ -29,7 +29,7 @@ const SetList = () => {
 
   return (
     <div className="p-4">
-      <section class="mb-4 rounded-xl shadow-xl bg-center bg-cover bg-no-repeat bg-[url('https://p2.trrsf.com/image/fget/cf/1200/630/middle/images.terra.com/2022/02/21/charizard-tcg-2102.jfif')] bg-gray-700 bg-blend-multiply">
+      <section class="mb-4 rounded-xl shadow-xl bg-center bg-cover bg-no-repeat bg-[url('https://w0.peakpx.com/wallpaper/133/146/HD-wallpaper-pikachu-charizard-snorlax-crustle-greninja-eldegoss-talonflame-lucario-pokemon-unite.jpg')] bg-gray-700 bg-blend-multiply">
         <div class="mx-full text-center py-20">
           <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
             Trading Card Game
