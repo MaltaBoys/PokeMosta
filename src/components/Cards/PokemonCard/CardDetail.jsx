@@ -349,9 +349,8 @@ function CardDetail() {
 		 *? 1 -> Evolución corta, una primera y cero segundas
 		 *? 2 -> Línea normal, una primera y una segunda
 		 *? 3 -> Una primera y dos segundas
-		 *? 4 -> Dos primeras, cero segundas O Tres primeras, cero segundas
+		 *? 4 -> Dos primeras, cero segundas O Tres primeras, cero segundas O Eevee
 		 *? 5 -> Dos primera y una o dos segundas
-		 *? 6 -> Eevee
 		 *
 		 * TODO HACER UN SWITCH PARA SEGÚN EL TIPO DE LÍNEA PINTAR UNA COSA U OTRA
 		 */
@@ -365,7 +364,9 @@ function CardDetail() {
 		} else if (numFirstEvolutions == 1 && numSecondEvolutions == 2) {
 			evolutionChainType = 3;
 		} else if (
-			(numFirstEvolutions == 2 || numFirstEvolutions == 3) &&
+			(numFirstEvolutions == 2 ||
+				numFirstEvolutions == 3 ||
+				numFirstEvolutions == 8) &&
 			numSecondEvolutions == 0
 		) {
 			evolutionChainType = 4;
@@ -374,8 +375,6 @@ function CardDetail() {
 			(numSecondEvolutions == 2 || numSecondEvolutions == 1)
 		) {
 			evolutionChainType = 5;
-		} else if (numFirstEvolutions == 8) {
-			evolutionChainType = 6;
 		}
 		console.log("Tipo de evolución: ", evolutionChainType);
 		if (evolutionChain.species) {
