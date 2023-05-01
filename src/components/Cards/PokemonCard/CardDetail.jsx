@@ -13,6 +13,8 @@ function CardDetail() {
 	const [evolutionChain, setEvolutionChain] = useState([]);
 	const [isHidden1, setIsHidden1] = useState(false);
 	const [isHidden2, setIsHidden2] = useState(true);
+	const [color, setColor] = useState("#4B5563");
+	const [clicked, setClicked] = useState(false);
 
 	// States to store the search data by the ID parameter
 	let params = useParams();
@@ -167,8 +169,14 @@ function CardDetail() {
 		pokemonCard.id +
 		".png";
 	const toggleDivs = () => {
+		if (!clicked) {
+			setColor("#FFFF00");
+		} else {
+			setColor("#4B5563");
+		}
 		setIsHidden1(!isHidden1);
 		setIsHidden2(!isHidden2);
+		setClicked(!clicked);
 	};
 	// Get the description
 	let description = "";
@@ -181,12 +189,20 @@ function CardDetail() {
 	// Get the category
 	let category = "";
 	if (pokemonSpecies && pokemonSpecies.genera.length > 0) {
-		category = pokemonSpecies.genera[7].genus;
+		pokemonSpecies.genera.forEach((genera) => {
+			if (genera.language && genera.language.name == "en") {
+				category = genera.genus;
+			}
+		});
+		if (category == "") {
+			category = pokemonSpecies.genera[0].genus;
+		}
 	} else {
 		category = "Any category";
 	}
 
-	// Get growth rate
+	/* 	console.log(category, "ESTA ES LA CATEGORIA DEL POKEMON");
+	 */ // Get growth rate
 	let growthRate = "";
 	if (pokemonSpecies) {
 		growthRate = pokemonSpecies.growth_rate.name;
@@ -288,7 +304,7 @@ function CardDetail() {
 				<div
 					className={`leading-none me-2 text-xs font-medium px-3 pt-2.5 pb-2 rounded-md ${typesStyleSheet[element]}`}
 				>
-					{element}
+					{element.charAt(0).toUpperCase() + element.slice(1)}
 				</div>
 			);
 		});
@@ -308,11 +324,59 @@ function CardDetail() {
 			<img
 				src={stringImgPoke}
 				alt="PokemonChainImage"
-				className="p-4 dark:bg-gray-700 rounded-full"
+				className="p-4 dark:bg-gray-700 rounded-full overflow-visible z-10"
 			/>
 		);
 	}
+	//Get the Evolutoin details
+	function getEvoDetails(evolution) {
+		let itemEvo = false;
+		let itemImg = "";
+		let itemTrade = false;
+		let itemTradeImg = "";
 
+		const details = evolution.evolution_details.map((detail) => {
+			if (detail.min_level) {
+				return `Lvl ${detail.min_level}`;
+			} else if (detail.item) {
+				itemEvo = true;
+				itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
+				const itemName = detail.item.name;
+				const formattedName = itemName
+					.split("-")
+					.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(" ");
+				return formattedName;
+			} else if (detail.held_item) {
+				itemTrade = true;
+				itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
+				const itemName = detail.held_item.name;
+				const formattedName = itemName
+					.split("-")
+					.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(" ");
+				return formattedName;
+			} else if (detail.min_happiness) {
+				return `Hpns ${detail.min_happiness}`;
+			} else if (detail.location) {
+				return detail.location.name;
+			} else if (detail.known_move) {
+				return detail.known_move.name;
+			} else if (detail.trigger) {
+				return detail.trigger.name;
+			} else {
+				return "Unknown";
+			}
+		});
+
+		return {
+			details: details,
+			itemEvo: itemEvo,
+			itemImg: itemImg,
+			itemTrade: itemTrade,
+			itemTradeImg: itemTradeImg,
+		};
+	}
 	//Get the evolution ID
 	function getEvoId(imgsource) {
 		const url = imgsource.species.url;
@@ -345,49 +409,60 @@ function CardDetail() {
 		}
 		/**
 		 ** TIPOS DE EVOLUCION
-		 *? 0 -> Sin Evoluciones
-		 *? 1 -> Evolución corta, una primera y cero segundas
-		 *? 2 -> Línea normal, una primera y una segunda
-		 *? 3 -> Una primera y dos segundas
-		 *? 4 -> Dos primeras, cero segundas O Tres primeras, cero segundas O Eevee
-		 *? 5 -> Dos primera y una o dos segundas
+		 *? 0 -> Sin Evoluciones Palkia
+		 *? 1 -> Evolución corta, una primera y cero segundas Snover
+		 *? 2 -> Línea normal, una primera y una segunda Larvitar
+		 *? 3 -> Una primera y dos segundas Poliwag
+		 *? 4 -> Dos primeras, cero segundas Snorunt O Tres primeras, cero segundas Tyrogue
+		 *? 5 -> Dos primera y una o dos segundas Wurmple
+		 *? 6 -> Eevee
 		 *
 		 * TODO HACER UN SWITCH PARA SEGÚN EL TIPO DE LÍNEA PINTAR UNA COSA U OTRA
 		 */
 		let evolutionChainType = -1;
-		if (numFirstEvolutions == 0) {
+		if (numFirstEvolutions === 0) {
 			evolutionChainType = 0;
-		} else if (numFirstEvolutions == 1 && numSecondEvolutions == 0) {
+		} else if (numFirstEvolutions === 1 && numSecondEvolutions === 0) {
 			evolutionChainType = 1;
-		} else if (numFirstEvolutions == 1 && numSecondEvolutions == 1) {
+		} else if (numFirstEvolutions === 1 && numSecondEvolutions === 1) {
 			evolutionChainType = 2;
-		} else if (numFirstEvolutions == 1 && numSecondEvolutions == 2) {
+		} else if (numFirstEvolutions === 1 && numSecondEvolutions === 2) {
 			evolutionChainType = 3;
 		} else if (
-			(numFirstEvolutions == 2 ||
-				numFirstEvolutions == 3 ||
-				numFirstEvolutions == 8) &&
-			numSecondEvolutions == 0
+			(numFirstEvolutions === 2 || numFirstEvolutions === 3) &&
+			numSecondEvolutions === 0
 		) {
 			evolutionChainType = 4;
 		} else if (
-			numFirstEvolutions == 2 &&
-			(numSecondEvolutions == 2 || numSecondEvolutions == 1)
+			numFirstEvolutions === 2 &&
+			(numSecondEvolutions === 2 || numSecondEvolutions === 1)
 		) {
 			evolutionChainType = 5;
+		} else if (numFirstEvolutions === 8) {
+			evolutionChainType = 6;
 		}
 		console.log("Tipo de evolución: ", evolutionChainType);
 		if (evolutionChain.species) {
 			chain.push(
-				<div className="col-span-2 flex flex-col items-center justify-center">
-					{getEvoImage(evolutionChain)}
-					<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-						{evolutionChain.species.name}&nbsp;
-						<span className="dark:text-gray-400 font-medium">
-							#{getEvoId(evolutionChain)}
-						</span>
-					</p>
-				</div>
+				<Link
+					to={`/pokemon/${getEvoId(evolutionChain)}`}
+					className="col-span-2 flex flex-col items-center justify-center"
+				>
+					<div>
+						{getEvoImage(evolutionChain)}
+						<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+							{evolutionChain.species.name}&nbsp;
+							<span className="dark:text-gray-400 font-medium">
+								#
+								{getEvoId(evolutionChain) < 10
+									? "00" + getEvoId(evolutionChain)
+									: getEvoId(evolutionChain) < 100
+									? "0" + getEvoId(evolutionChain)
+									: getEvoId(evolutionChain)}
+							</span>
+						</p>
+					</div>
+				</Link>
 			);
 		}
 		switch (evolutionChainType) {
@@ -396,57 +471,38 @@ function CardDetail() {
 			case 1:
 				if (evolutionChain.evolves_to) {
 					evolutionChain.evolves_to.map((evolution) => {
-						let itemEvo = false;
-						let itemImg = "";
-						let itemTrade = false;
-						let itemTradeImg = "";
-
-						const details = evolution.evolution_details.map((detail) => {
-							if (detail.min_level) {
-								return `Lvl ${detail.min_level}`;
-							} else if (detail.item) {
-								itemEvo = true;
-								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-								return detail.item.name;
-							} else if (detail.held_item) {
-								itemTrade = true;
-								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-								return detail.held_item.name;
-							} else if (detail.min_happiness) {
-								return detail.min_happiness;
-							} else if (detail.location) {
-								return detail.location.name;
-							} else if (detail.known_move) {
-								return detail.known_move.name;
-							} else if (detail.trigger) {
-								return detail.trigger.name;
-							} else {
-								return "Unknown";
-							}
-						});
+						const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+							getEvoDetails(evolution);
 
 						chain.push(
 							<>
-								<div className="relative flex flex-col items-center justify-center">
+								<div className="relative flex flex-col col-span-4 items-center justify-center">
 									<p className="absolute dark:text-gray-400 font-medium text-sm top-1/4">
 										{details}
 									</p>
 									<div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
 								</div>
-								<div
-									key={evolution.species.name}
+								<Link
+									to={`/pokemon/${getEvoId(evolution)}`}
 									className="col-span-2 flex flex-col items-center justify-center"
 								>
-									{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-									{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-									{getEvoImage(evolution)}
-									<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-										{evolution.species.name}&nbsp;
-										<span className="dark:text-gray-400 font-medium">
-											#{getEvoId(evolution)}
-										</span>
-									</p>
-								</div>
+									<div key={evolution.species.name}>
+										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+										{getEvoImage(evolution)}
+										<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+											{evolution.species.name}&nbsp;
+											<span className="dark:text-gray-400 font-medium">
+												#
+												{getEvoId(evolution) < 10
+													? "00" + getEvoId(evolution)
+													: getEvoId(evolution) < 100
+													? "0" + getEvoId(evolution)
+													: getEvoId(evolution)}
+											</span>
+										</p>
+									</div>
+								</Link>
 							</>
 						);
 					});
@@ -456,34 +512,8 @@ function CardDetail() {
 				//First Evolution
 				if (evolutionChain.evolves_to) {
 					evolutionChain.evolves_to.map((evolution) => {
-						let itemEvo = false;
-						let itemImg = "";
-						let itemTrade = false;
-						let itemTradeImg = "";
-
-						const details = evolution.evolution_details.map((detail) => {
-							if (detail.min_level) {
-								return `Lvl ${detail.min_level}`;
-							} else if (detail.item) {
-								itemEvo = true;
-								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-								return detail.item.name;
-							} else if (detail.held_item) {
-								itemTrade = true;
-								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-								return detail.held_item.name;
-							} else if (detail.min_happiness) {
-								return detail.min_happiness;
-							} else if (detail.location) {
-								return detail.location.name;
-							} else if (detail.known_move) {
-								return detail.known_move.name;
-							} else if (detail.trigger) {
-								return detail.trigger.name;
-							} else {
-								return "Unknown";
-							}
-						});
+						const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+							getEvoDetails(evolution);
 
 						chain.push(
 							<>
@@ -493,71 +523,63 @@ function CardDetail() {
 									</p>
 									<div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
 								</div>
-								<div
-									key={evolution.species.name}
+								<Link
+									to={`/pokemon/${getEvoId(evolution)}`}
 									className="col-span-2 flex flex-col items-center justify-center"
 								>
-									{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-									{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-									{getEvoImage(evolution)}
-									<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-										{evolution.species.name}&nbsp;
-										<span className="dark:text-gray-400 font-medium">
-											#{getEvoId(evolution)}
-										</span>
-									</p>
-								</div>
+									<div key={evolution.species.name}>
+										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+										{getEvoImage(evolution)}
+										<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+											{evolution.species.name}&nbsp;
+											<span className="dark:text-gray-400 font-medium">
+												#
+												{getEvoId(evolution) < 10
+													? "00" + getEvoId(evolution)
+													: getEvoId(evolution) < 100
+													? "0" + getEvoId(evolution)
+													: getEvoId(evolution)}
+											</span>
+										</p>
+									</div>
+								</Link>
 							</>
 						);
 						//Second Evolution
 						if (evolution.evolves_to) {
 							evolution.evolves_to.map((evolution) => {
-								let itemEvo = false;
-								let itemImg = "";
-								let itemTrade = false;
-								let itemTradeImg = "";
-
-								const details = evolution.evolution_details.map((detail) => {
-									if (detail.min_level) {
-										return `Lvl ${detail.min_level}`;
-									} else if (detail.item) {
-										itemEvo = true;
-										itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-										return detail.item.name;
-									} else if (detail.held_item) {
-										itemTrade = true;
-										itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-										return detail.held_item.name;
-									} else if (detail.min_happiness) {
-										return detail.min_happiness;
-									} else if (detail.location) {
-										return detail.location.name;
-									} else if (detail.known_move) {
-										return detail.known_move.name;
-									} else if (detail.trigger) {
-										return detail.trigger.name;
-									} else {
-										return "Unknown Evolution Detail";
-									}
-								});
-
+								const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+									getEvoDetails(evolution);
 								chain.push(
 									<>
-										<div className="grid-cols-1">
-											{details}
-											<div className="w-full h-2 dark:bg-gray-50"></div>
-										</div>
-										<div key={evolution.species.name} className="grid-cols-2">
-											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-											{getEvoImage(evolution)}
-											<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-												{evolution.species.name}{" "}
-												<span className="dark:text-gray-400 font-medium">
-													#{getEvoId(evolution)}
-												</span>
+										<div className="relative flex flex-col items-center justify-center">
+											<p className="absolute dark:text-gray-400 font-medium text-sm top-1/4">
+												{details}
 											</p>
+											<div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
 										</div>
+										<Link
+											to={`/pokemon/${getEvoId(evolution)}`}
+											className="col-span-2 flex flex-col items-center justify-center"
+										>
+											<div key={evolution.species.name}>
+												{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+												{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+												{getEvoImage(evolution)}
+												<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+													{evolution.species.name}&nbsp;
+													<span className="dark:text-gray-400 font-medium">
+														#
+														{getEvoId(evolution) < 10
+															? "00" + getEvoId(evolution)
+															: getEvoId(evolution) < 100
+															? "0" + getEvoId(evolution)
+															: getEvoId(evolution)}
+													</span>
+												</p>
+											</div>
+										</Link>
 									</>
 								);
 							});
@@ -569,111 +591,93 @@ function CardDetail() {
 				//First Evolution
 				if (evolutionChain.evolves_to) {
 					evolutionChain.evolves_to.forEach((evolution) => {
-						let itemEvo = false;
-						let itemImg = "";
-						let itemTrade = false;
-						let itemTradeImg = "";
-
-						const details = evolution.evolution_details.map((detail) => {
-							if (detail.min_level) {
-								return `Lvl ${detail.min_level}`;
-							} else if (detail.item) {
-								itemEvo = true;
-								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-								return detail.item.name;
-							} else if (detail.held_item) {
-								itemTrade = true;
-								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-								return detail.held_item.name;
-							} else if (detail.min_happiness) {
-								return detail.min_happiness;
-							} else if (detail.location) {
-								return detail.location.name;
-							} else if (detail.known_move) {
-								return detail.known_move.name;
-							} else if (detail.trigger) {
-								return detail.trigger.name;
-							} else {
-								return "Unknown";
-							}
-						});
+						const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+							getEvoDetails(evolution);
 
 						chain.push(
 							<>
 								<div className="relative flex flex-col items-center justify-center">
-									<p className="absolute dark:text-gray-400 font-medium text-sm top-1/4">
+									<p className="absolute dark:text-gray-400 font-medium text-sm top-1/4 text-center">
 										{details}
 									</p>
 									<div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
 								</div>
-								<div
-									key={evolution.species.name}
-									className="col-span-2 flex flex-col items-center justify-center"
+								<Link
+									to={`/pokemon/${getEvoId(evolution)}`}
+									className="col-span-2 flex flex-col items-center justify-center z-10"
 								>
-									{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-									{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-									{getEvoImage(evolution)}
-									<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-										{evolution.species.name}&nbsp;
-										<span className="dark:text-gray-400 font-medium">
-											#{getEvoId(evolution)}
-										</span>
-									</p>
-								</div>
+									<div key={evolution.species.name}>
+										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+										{getEvoImage(evolution)}
+										<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+											{evolution.species.name}&nbsp;
+											<span className="dark:text-gray-400 font-medium">
+												#
+												{getEvoId(evolution) < 10
+													? "00" + getEvoId(evolution)
+													: getEvoId(evolution) < 100
+													? "0" + getEvoId(evolution)
+													: getEvoId(evolution)}
+											</span>
+										</p>
+									</div>
+								</Link>
 							</>
 						);
 						//Second Evolution
 						if (evolution.evolves_to) {
 							const evolutionContent = evolution.evolves_to.map((evolution) => {
-								let itemEvo = false;
-								let itemImg = "";
-								let itemTrade = false;
-								let itemTradeImg = "";
-
-								const details = evolution.evolution_details.map((detail) => {
-									if (detail.min_level) {
-										return `Lvl ${detail.min_level}`;
-									} else if (detail.item) {
-										itemEvo = true;
-										itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-										return detail.item.name;
-									} else if (detail.held_item) {
-										itemTrade = true;
-										itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-										return detail.held_item.name;
-									} else if (detail.min_happiness) {
-										return detail.min_happiness;
-									} else if (detail.location) {
-										return detail.location.name;
-									} else if (detail.known_move) {
-										return detail.known_move.name;
-									} else if (detail.trigger) {
-										return detail.trigger.name;
-									} else {
-										return "Unknown Evolution Detail";
-									}
-								});
+								const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+									getEvoDetails(evolution);
 								return (
 									<>
-										<div className="grid-cols-1">
-											{details}
-											<div className="w-full h-2 dark:bg-gray-50"></div>
-										</div>
-										<div key={evolution.species.name} className="grid-cols-2">
-											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-											{getEvoImage(evolution)}
-											<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-												{evolution.species.name}{" "}
-												<span className="dark:text-gray-400 font-medium">
-													#{getEvoId(evolution)}
-												</span>
+										<div className="relative flex flex-col items-center justify-center">
+											<p className="absolute dark:text-gray-400 font-medium text-sm -left-20 top-28 text-center w-10">
+												{details}
 											</p>
 										</div>
+										<Link
+											to={`/pokemon/${getEvoId(evolution)}`}
+											className="relative col-span-2 flex flex-col items-center justify-center z-40 mb-10"
+										>
+											<div key={evolution.species.name}>
+												<p className="absolute -left-20 top-20">
+													{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+												</p>
+												<p className="absolute -left-20 top-20">
+													{itemTrade ? (
+														<img src={itemTradeImg} alt="Item" />
+													) : (
+														""
+													)}
+												</p>
+												{getEvoImage(evolution)}
+												<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+													{evolution.species.name}&nbsp;
+													<span className="dark:text-gray-400 font-medium">
+														#
+														{getEvoId(evolution) < 10
+															? "00" + getEvoId(evolution)
+															: getEvoId(evolution) < 100
+															? "0" + getEvoId(evolution)
+															: getEvoId(evolution)}
+													</span>
+												</p>
+											</div>
+										</Link>
 									</>
 								);
 							});
-							chain.push(<div className="divs_juntos">{evolutionContent}</div>);
+							chain.push(
+								<>
+									<div className="flex flex-col items-center justify-center mb-14">
+										<div className="w-40 border-dashed border-2 border-gray-50 h-1 -rotate-45 mb-20 z-0"></div>
+										<div className="w-40 border-dashed border-2 border-gray-50 h-1 rotate-45 mt-10 z-0"></div>
+									</div>
+									<div className="col-span-2 z-40">{evolutionContent}</div>
+								</>
+							);
 						}
 					});
 				}
@@ -683,51 +687,35 @@ function CardDetail() {
 				if (evolutionChain.evolves_to) {
 					const evolutionContent = evolutionChain.evolves_to.map(
 						(evolution) => {
-							let itemEvo = false;
-							let itemImg = "";
-							let itemTrade = false;
-							let itemTradeImg = "";
-
-							const details = evolution.evolution_details.map((detail) => {
-								if (detail.min_level) {
-									return `Lvl ${detail.min_level}`;
-								} else if (detail.item) {
-									itemEvo = true;
-									itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-									return detail.item.name;
-								} else if (detail.held_item) {
-									itemTrade = true;
-									itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-									return detail.held_item.name;
-								} else if (detail.min_happiness) {
-									return detail.min_happiness;
-								} else if (detail.location) {
-									return detail.location.name;
-								} else if (detail.known_move) {
-									return detail.known_move.name;
-								} else if (detail.trigger) {
-									return detail.trigger.name;
-								} else {
-									return "Unknown Evolution Detail";
-								}
-							});
+							const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+								getEvoDetails(evolution);
 							return (
 								<>
 									<div className="grid-cols-1">
 										{details}
 										<div className="w-full h-2 dark:bg-gray-50"></div>
 									</div>
-									<div key={evolution.species.name} className="grid-cols-2">
-										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-										{getEvoImage(evolution)}
-										<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-											{evolution.species.name}{" "}
-											<span className="dark:text-gray-400 font-medium">
-												#{getEvoId(evolution)}
-											</span>
-										</p>
-									</div>
+									<Link
+										to={`/pokemon/${getEvoId(evolution)}`}
+										className="grid-cols-2"
+									>
+										<div key={evolution.species.name}>
+											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+											{getEvoImage(evolution)}
+											<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+												{evolution.species.name}&nbsp;
+												<span className="dark:text-gray-400 font-medium">
+													#
+													{getEvoId(evolution) < 10
+														? "00" + getEvoId(evolution)
+														: getEvoId(evolution) < 100
+														? "0" + getEvoId(evolution)
+														: getEvoId(evolution)}
+												</span>
+											</p>
+										</div>
+									</Link>
 								</>
 							);
 						}
@@ -739,51 +727,35 @@ function CardDetail() {
 				if (evolutionChain.evolves_to) {
 					const evolutionContent = evolutionChain.evolves_to.map(
 						(evolution) => {
-							let itemEvo = false;
-							let itemImg = "";
-							let itemTrade = false;
-							let itemTradeImg = "";
-
-							const details = evolution.evolution_details.map((detail) => {
-								if (detail.min_level) {
-									return `Lvl ${detail.min_level}`;
-								} else if (detail.item) {
-									itemEvo = true;
-									itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-									return detail.item.name;
-								} else if (detail.held_item) {
-									itemTrade = true;
-									itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-									return detail.held_item.name;
-								} else if (detail.min_happiness) {
-									return detail.min_happiness;
-								} else if (detail.location) {
-									return detail.location.name;
-								} else if (detail.known_move) {
-									return detail.known_move.name;
-								} else if (detail.trigger) {
-									return detail.trigger.name;
-								} else {
-									return "Unknown Evolution Detail";
-								}
-							});
+							const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+								getEvoDetails(evolution);
 							return (
 								<>
 									<div className="grid-cols-1">
 										{details}
 										<div className="w-full h-2 dark:bg-gray-50"></div>
 									</div>
-									<div key={evolution.species.name} className="grid-cols-2">
-										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-										{getEvoImage(evolution)}
-										<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-											{evolution.species.name}{" "}
-											<span className="dark:text-gray-400 font-medium">
-												#{getEvoId(evolution)}
-											</span>
-										</p>
-									</div>
+									<Link
+										to={`/pokemon/${getEvoId(evolution)}`}
+										className="grid-cols-2"
+									>
+										<div key={evolution.species.name}>
+											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+											{getEvoImage(evolution)}
+											<p className="dark:text-gray-200 capitalize font-semibold mt-4text-center">
+												{evolution.species.name}&nbsp;
+												<span className="dark:text-gray-400 font-medium">
+													#
+													{getEvoId(evolution) < 10
+														? "00" + getEvoId(evolution)
+														: getEvoId(evolution) < 100
+														? "0" + getEvoId(evolution)
+														: getEvoId(evolution)}
+												</span>
+											</p>
+										</div>
+									</Link>
 								</>
 							);
 						}
@@ -794,52 +766,39 @@ function CardDetail() {
 						const evolutionContent = evolutionChain.evolves_to.map(
 							(evolution) => {
 								return evolution.evolves_to.map((evolution) => {
-									console.log(evolution);
-									let itemEvo = false;
-									let itemImg = "";
-									let itemTrade = false;
-									let itemTradeImg = "";
-
-									const details = evolution.evolution_details.map((detail) => {
-										if (detail.min_level) {
-											return `Lvl ${detail.min_level}`;
-										} else if (detail.item) {
-											itemEvo = true;
-											itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-											return detail.item.name;
-										} else if (detail.held_item) {
-											itemTrade = true;
-											itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-											return detail.held_item.name;
-										} else if (detail.min_happiness) {
-											return detail.min_happiness;
-										} else if (detail.location) {
-											return detail.location.name;
-										} else if (detail.known_move) {
-											return detail.known_move.name;
-										} else if (detail.trigger) {
-											return detail.trigger.name;
-										} else {
-											return "Unknown Evolution Detail";
-										}
-									});
+									const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+										getEvoDetails(evolution);
 									return (
 										<>
 											<div className="grid-cols-1">
 												{details}
 												<div className="w-full h-2 dark:bg-gray-50"></div>
 											</div>
-											<div key={evolution.species.name} className="grid-cols-2">
-												{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-												{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-												{getEvoImage(evolution)}
-												<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-													{evolution.species.name}{" "}
-													<span className="dark:text-gray-400 font-medium">
-														#{getEvoId(evolution)}
-													</span>
-												</p>
-											</div>
+											<Link
+												to={`/pokemon/${getEvoId(evolution)}`}
+												className="grid-cols-2"
+											>
+												<div key={evolution.species.name}>
+													{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+													{itemTrade ? (
+														<img src={itemTradeImg} alt="Item" />
+													) : (
+														""
+													)}
+													{getEvoImage(evolution)}
+													<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+														{evolution.species.name}&nbsp;
+														<span className="dark:text-gray-400 font-medium">
+															#
+															{getEvoId(evolution) < 10
+																? "00" + getEvoId(evolution)
+																: getEvoId(evolution) < 100
+																? "0" + getEvoId(evolution)
+																: getEvoId(evolution)}
+														</span>
+													</p>
+												</div>
+											</Link>
 										</>
 									);
 								});
@@ -849,38 +808,53 @@ function CardDetail() {
 					}
 				}
 				return <>{chain}</>;
+			case 6:
+				//First Evolution
+				if (evolutionChain.evolves_to) {
+					const evolutionContent = evolutionChain.evolves_to.map(
+						(evolution) => {
+							const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+								getEvoDetails(evolution);
+							return (
+								<>
+									<div className="grid-cols-1">
+										{details}
+										<div className="w-full h-2 dark:bg-gray-50"></div>
+									</div>
+									<Link
+										to={`/pokemon/${getEvoId(evolution)}`}
+										className="grid-cols-2"
+									>
+										<div key={evolution.species.name}>
+											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+											{getEvoImage(evolution)}
+											<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+												{evolution.species.name}&nbsp;
+												<span className="dark:text-gray-400 font-medium">
+													#
+													{getEvoId(evolution) < 10
+														? "00" + getEvoId(evolution)
+														: getEvoId(evolution) < 100
+														? "0" + getEvoId(evolution)
+														: getEvoId(evolution)}
+												</span>
+											</p>
+										</div>
+									</Link>
+								</>
+							);
+						}
+					);
+					chain.push(<div className="divs_juntos">{evolutionContent}</div>);
+				}
+				return <>{chain}</>;
 			default:
 				//First Evolution
 				if (evolutionChain.evolves_to) {
 					evolutionChain.evolves_to.forEach((evolution) => {
-						let itemEvo = false;
-						let itemImg = "";
-						let itemTrade = false;
-						let itemTradeImg = "";
-
-						const details = evolution.evolution_details.map((detail) => {
-							if (detail.min_level) {
-								return `Lvl ${detail.min_level}`;
-							} else if (detail.item) {
-								itemEvo = true;
-								itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-								return detail.item.name;
-							} else if (detail.held_item) {
-								itemTrade = true;
-								itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-								return detail.held_item.name;
-							} else if (detail.min_happiness) {
-								return detail.min_happiness;
-							} else if (detail.location) {
-								return detail.location.name;
-							} else if (detail.known_move) {
-								return detail.known_move.name;
-							} else if (detail.trigger) {
-								return detail.trigger.name;
-							} else {
-								return "Unknown";
-							}
-						});
+						const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+							getEvoDetails(evolution);
 
 						chain.push(
 							<>
@@ -890,53 +864,34 @@ function CardDetail() {
 									</p>
 									<div className="w-full mb-8 border-dashed border-2 border-gray-50"></div>
 								</div>
-								<div
-									key={evolution.species.name}
+								<Link
+									to={`/pokemon/${getEvoId(evolution)}`}
 									className="col-span-2 flex flex-col items-center justify-center"
 								>
-									{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-									{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-									{getEvoImage(evolution)}
-									<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-										{evolution.species.name}&nbsp;
-										<span className="dark:text-gray-400 font-medium">
-											#{getEvoId(evolution)}
-										</span>
-									</p>
-								</div>
+									<div key={evolution.species.name}>
+										{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+										{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+										{getEvoImage(evolution)}
+										<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+											{evolution.species.name}&nbsp;
+											<span className="dark:text-gray-400 font-medium">
+												#
+												{getEvoId(evolution) < 10
+													? "00" + getEvoId(evolution)
+													: getEvoId(evolution) < 100
+													? "0" + getEvoId(evolution)
+													: getEvoId(evolution)}
+											</span>
+										</p>
+									</div>
+								</Link>
 							</>
 						);
 						//Second Evolution
 						if (evolution.evolves_to) {
 							evolution.evolves_to.forEach((evolution) => {
-								let itemEvo = false;
-								let itemImg = "";
-								let itemTrade = false;
-								let itemTradeImg = "";
-
-								const details = evolution.evolution_details.map((detail) => {
-									if (detail.min_level) {
-										return `Lvl ${detail.min_level}`;
-									} else if (detail.item) {
-										itemEvo = true;
-										itemImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.item.name}.png`;
-										return detail.item.name;
-									} else if (detail.held_item) {
-										itemTrade = true;
-										itemTradeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${detail.held_item.name}.png`;
-										return detail.held_item.name;
-									} else if (detail.min_happiness) {
-										return detail.min_happiness;
-									} else if (detail.location) {
-										return detail.location.name;
-									} else if (detail.known_move) {
-										return detail.known_move.name;
-									} else if (detail.trigger) {
-										return detail.trigger.name;
-									} else {
-										return "Unknown Evolution Detail";
-									}
-								});
+								const { details, itemEvo, itemImg, itemTrade, itemTradeImg } =
+									getEvoDetails(evolution);
 
 								chain.push(
 									<>
@@ -944,17 +899,27 @@ function CardDetail() {
 											{details}
 											<div className="w-full h-2 dark:bg-gray-50"></div>
 										</div>
-										<div key={evolution.species.name} className="grid-cols-2">
-											{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
-											{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
-											{getEvoImage(evolution)}
-											<p className="dark:text-gray-200 capitalize font-semibold mt-4">
-												{evolution.species.name}{" "}
-												<span className="dark:text-gray-400 font-medium">
-													#{getEvoId(evolution)}
-												</span>
-											</p>
-										</div>
+										<Link
+											to={`/pokemon/${getEvoId(evolution)}`}
+											className="grid-cols-2"
+										>
+											<div key={evolution.species.name}>
+												{itemEvo ? <img src={itemImg} alt="Item" /> : ""}
+												{itemTrade ? <img src={itemTradeImg} alt="Item" /> : ""}
+												{getEvoImage(evolution)}
+												<p className="dark:text-gray-200 capitalize font-semibold mt-4 text-center">
+													{evolution.species.name}&nbsp;
+													<span className="dark:text-gray-400 font-medium">
+														#
+														{getEvoId(evolution) < 10
+															? "00" + getEvoId(evolution)
+															: getEvoId(evolution) < 100
+															? "0" + getEvoId(evolution)
+															: getEvoId(evolution)}
+													</span>
+												</p>
+											</div>
+										</Link>
 									</>
 								);
 							});
@@ -993,7 +958,8 @@ function CardDetail() {
 						</Link>
 						<FaStar
 							onClick={toggleDivs}
-							className="transition text-4xl dark:text-gray-600 dark:hover:text-yellow-300 cursor-pointer"
+							className="transition text-4xl cursor-pointer"
+							style={{ color: color }}
 						/>
 					</div>
 					<img
@@ -1157,18 +1123,18 @@ function CardDetail() {
 					</div>
 				</div>
 			</div>
-			<div className="w-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4">
-				<div className="overflow-hidden relative col-span-2">
+			<div className="w-full h-full mx-auto lg:grid lg:grid-cols-5 p-4 gap-4 mb-14">
+				<div className="relative col-span-2">
 					<h2 className="text-2xl font-semibold dark:text-white mb-4">Stats</h2>
-					<div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl py-6 px-4">
+					<div className="h-full flex items-center shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl py-6 px-4">
 						{EntireStat(pokemonCard)}
 					</div>
 				</div>
-				<div className="overflow-hidden relative col-span-3">
+				<div className="relative col-span-3 rounded-xl">
 					<h2 className="text-2xl font-semibold dark:text-white mb-4">
 						Evolution Line
 					</h2>
-					<div className="shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl grid grid-cols-8">
+					<div className="h-full px-4 pt-4 shadow-lg shadow-gray-300 dark:shadow-xl dark:shadow-gray-900 bg-gray-50 dark:bg-gray-800 rounded-xl grid grid-cols-8">
 						{PrintEvolutionChain(evolutionChain)}
 					</div>
 				</div>
