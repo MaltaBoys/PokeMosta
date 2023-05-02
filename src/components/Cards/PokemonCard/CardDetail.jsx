@@ -1100,15 +1100,15 @@ function CardDetail() {
 							<p className="text-sm font-medium dark:text-gray-500 mb-2">
 								Growth Rate
 							</p>
+							{/* - Erratic: 600,000 exp at level 100
+                				- Fast: 800,000 exp at level 100
+               					- medium fast: 1,000,000 exp at level 100
+                  				- medium slow: 1,059,860 exp at level 100
+                  				- slow: 1,250,000 exp at level 100
+                  				- Fluctuating: 1,640,000 exp at level 100 */}
 							<p className="text-md font-medium dark:text-white">
 								{growthRate}
 							</p>
-							{/* - Erratic: 600,000 exp at level 100
-                  - Fast: 800,000 exp at level 100
-                  - medium fast: 1,000,000 exp at level 100
-                  - medium slow: 1,059,860 exp at level 100
-                  - slow: 1,250,000 exp at level 100
-                  - Fluctuating: 1,640,000 exp at level 100 */}
 						</div>
 						<div className="flex flex-col">
 							<p className="text-sm font-medium dark:text-gray-500 mb-2">

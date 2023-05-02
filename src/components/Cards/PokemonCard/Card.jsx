@@ -57,29 +57,31 @@ function Card({ pokemonId }) {
 
 	// We keep the types of pokemon that there are (two maximum)
 	const types = pokemonCard.types.map((type) => type.type.name);
-	const priType = types[0];
-	const secType = types[1] || null;
+	const priType = types[0].charAt(0).toUpperCase().concat(types[0].slice(1));
+	const secType = types[1]
+		? types[1].charAt(0).toUpperCase().concat(types[1].slice(1))
+		: null;
 
 	// Array of styles for each type of Pokemon
 	const typesStyleSheet = {
-		bug: "t-bug dark:t-bug",
-		dark: "t-dark dark:t-dark",
-		dragon: "t-dragon dark:t-dragon",
-		electric: "t-electric dark:t-electric",
-		fairy: "t-fairy dark:t-fairy",
-		fighting: "t-fighting dark:t-fighting",
-		fire: "t-fire dark:t-fire",
-		flying: "t-flying dark:t-flying",
-		ghost: "t-ghost dark:t-ghost",
-		grass: "t-grass dark:t-grass",
-		ground: "t-ground dark:t-ground",
-		ice: "t-ice dark:t-ice",
-		normal: "t-normal dark:t-normal",
-		poison: "t-poison dark:t-poison",
-		psychic: "t-psychic dark:t-psychic",
-		rock: "t-rock dark:t-rock",
-		steel: "t-steel dark:t-steel",
-		water: "t-water dark:t-water",
+		Bug: "t-bug dark:t-bug",
+		Dark: "t-dark dark:t-dark",
+		Dragon: "t-dragon dark:t-dragon",
+		Electric: "t-electric dark:t-electric",
+		Fairy: "t-fairy dark:t-fairy",
+		Fighting: "t-fighting dark:t-fighting",
+		Fire: "t-fire dark:t-fire",
+		Flying: "t-flying dark:t-flying",
+		Ghost: "t-ghost dark:t-ghost",
+		Grass: "t-grass dark:t-grass",
+		Ground: "t-ground dark:t-ground",
+		Ice: "t-ice dark:t-ice",
+		Normal: "t-normal dark:t-normal",
+		Poison: "t-poison dark:t-poison",
+		Psychic: "t-psychic dark:t-psychic",
+		Rock: "t-rock dark:t-rock",
+		Steel: "t-steel dark:t-steel",
+		Water: "t-water dark:t-water",
 	};
 
 	// We get the corresponding style of the first and second types of Pokemon or an empty string if it hasn't been found
